@@ -35,7 +35,7 @@
 
 - name: Creacion Carpeta 
   file:
-      path: /home/ecf1900b/Ansible/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
+      path: /opt/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
       state: directory
       mode: u=rw,g=r,o=r
   delegate_to: localhost
