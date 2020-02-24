@@ -42,7 +42,7 @@
   run_once: true
 
 - name: Movimiento Archivos
-  copy: src=/tmp/{{ item }} dest=/home/ecf1900b/Ansible/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
+  copy: src=/tmp/{{ item }} dest=/opt/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
   with_items:
     - "CheckMachine.html"
     - "date.js"
