@@ -1,0 +1,10 @@
+        <tr>
+            <td class="{{ ansible_hostname }} Lclient server">{{ ansible_hostname }}</td>
+            <td class="{{ ansible_hostname }}vdate">{{ up.stdout }}</td>
+            <td class="{{ ansible_hostname }}time"></td>
+            <td class="{{ ansible_hostname }}cpu"><a>{{ cpu_porcent_free.stdout }}</a></td>
+            <td class="{{ ansible_hostname }}memory"><a>{{ memory_porcent_free.stdout }}</a></td>
+            <td class="{{ ansible_hostname }}swap"><a>{{ memory_swap_porcent.stdout }}</a></td>
+            <td class="{{ ansible_hostname }}file"><a>{{ File.stdout }}</a></td>
+            <td colspan="2" class="{{ ansible_hostname }}estado state"><a class="Lcert"></a></td>
+        </tr>
