@@ -37,7 +37,7 @@
   file:
       path: /opt/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
       state: directory
-      mode: u=rw,g=r,o=r
+      mode: u=rwx,g=rwx,o=rwx
   delegate_to: localhost
   run_once: true
 
