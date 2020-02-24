@@ -1,0 +1,6 @@
+---
+- name: Uptime de Maquinas de Unix
+  hosts: all
+  roles:
+      - Uptime
+  
