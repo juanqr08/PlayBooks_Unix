@@ -1,0 +1,37 @@
+---
+- name: "Execute Command - Solaris"
+  shell: who -b | awk '{print $4}'
+  register: upMonth
+- include: Convert.yml
+
+- name: "Memoria Fisica"
+  shell: /usr/sbin/prtconf | grep Memory | awk '{print $3}'
+  register: memory_total
+
+- name: "Memoria Fisica"
+  shell: vmstat 1 2 | tail -1 | awk '{print $5/1024}'
+  register: memory_free
+
+- name: "Memoria Fisica"
+  shell: echo {{ memory_total.stdout }} {{ memory_free.stdout }} | awk '{print ($1 - $2)}'
+  register: memory_used
+
+- name: "Memoria Fisica"
+  shell: echo {{ memory_total.stdout }} {{ memory_free.stdout }} {{ memory_used.stdout }} | awk '{print ($3*100)/$1}'
+  register: memory_porcent_free
+
+- name: "Memoria Fisica y CPU"
+  shell: vmstat -S M | sed -n 3p | awk '{print $22}'
+  register: cpu_porcent_free
+
+- name: "Memoria Fisica y CPU"
+  shell:  echo 0
+  register: memory_swap_porcent
+
+- name: "Creacion Vista Media HTML"
+  template: src=Host.j2.html dest=/tmp/{{ ansible_hostname }}.html
+  delegate_to: localhost
+
+- name: "Creacion JS"
+  template: src=dateComplete.j2.js dest=/tmp/date{{ ansible_hostname }}.js
+  delegate_to: localhost

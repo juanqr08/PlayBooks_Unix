@@ -1,0 +1,8 @@
+---
+- name: "Conversion Fecha - Primera Parte"
+  shell: kstat -pn system_misc -s boot_time | cut -f 2
+  register: upSecon
+
+- name: "Conversion Fecha - Segunda Parte"
+  shell: perl -le '@time = localtime({{ upSecon.stdout }}); $mday = $time[3]; $mon = $time[4]+1; $year = $time[5]+1900; if ($mon < 10){$monf = 0 . $mon}else {$monf = $mon};print "$year-$monf-$mday";'
+  register: up

@@ -1,0 +1,10 @@
+---
+- name: "Uptime de Maquinas Unix"
+  command: who -b
+  register: up
+
+- name: "Creacion Vista Inicial HTML"
+  template: src=CheckMachine.j2.html dest=/tmp/CheckMachine.html 
+  delegate_to: localhost
+  
+- include: up_Machine.yml

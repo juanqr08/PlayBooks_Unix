@@ -1,0 +1,38 @@
+---
+- name: "Execute Command - RedHat"
+  shell: who -r | awk '{print $3 " " $4}'
+  register: up
+
+- name: "Memoria Fisica y CPU"
+  shell: free | grep -i mem | awk '{print ($3*100)/$2}'
+  register: memory_porcent_free
+  
+- name: "Memoria Fisica y CPU"
+  shell: sar -u 1 1 | sed -n 4p | awk '{print $9}'
+  register: cpu_porcent_free
+
+- name: "Memoria Fisica y CPU"
+  shell:  free | grep -i swap | awk '{print ($3*100)/$2}'
+  register: memory_swap_porcent
+
+- name: Analizando FileSystem
+  shell: df -hP | sed 1d | wc -l
+  register: size_f
+
+- name: Analizando ...
+  shell: echo > /tmp/Filesystem.log
+
+- name: Filtrando Filesystem
+  shell: for (( i = 1; i <= {{ size_f.stdout }}; i++ )); do size=$(df -hP | sed 1d | awk '{print $5}' | sed 's/%//g' | sed -n $i\p); if [[ size -ge 1 ]]; then size=$(df -hP | sed 1d | awk '{print $5}' | sed -n $i\p);File=$(df -hP | sed 1d | awk '{print $6}' | sed -n $i\p); echo $size $File >> /tmp/Filesystem.log; fi; done
+
+- name: Analizando Tamaño
+  shell: cat /tmp/Filesystem.log 
+  register: File
+
+- name: "Creacion Vista Media HTML"
+  template: src=Host.j2.html dest=/tmp/{{ ansible_hostname }}.html
+  delegate_to: localhost
+
+- name: "Creacion JS"
+  template: src=dateComplete.j2.js dest=/tmp/date{{ ansible_hostname }}.js
+  delegate_to: localhost

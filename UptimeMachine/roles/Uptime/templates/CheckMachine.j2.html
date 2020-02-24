@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Monitoreo de Reinicios</title>
+    <script src="jquery-3.4.1.min.js"></script> 
+    <script src="moment.js" ></script>
+    <link rel='stylesheet' type='text/css' href='main.css'>
+</head>
+<body>
+    <div id="menu">
+        <div class="scrollmenu">
+        <a href="#" id="home">Home</a>
+        <a href="#">Monitor de Maquinas</a>
+        <a href="#">Inventario Maquinas Unix</a>
+        </div>        
+    </div>
+        <div id="margin">
+            <p class="Date">{{ ansible_date_time.date }}</p>
+            <h1 class="tittle">Monitores de Plataformas</h1>
+        </div>
+        <div class="margin-table">
+        <div class="group">
+            <div class="searchS">
+                <h2>Servidor</h2>
+                <input type="text" id="busquedaS" placeholder="Buscar Servidor...">
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="searchE">
+                <h2>Estados</h2>
+                <input type="text" id="busquedaE" placeholder="Buscar Estado...">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+        <div class="contenedor-tabla">
+            <table class="tabla">
+                    <tr>
+                        <th>Servidor</th>
+                        <th>Uptime</th>
+                        <th>Tiempo -  Uptime</th>
+                        <th>CPU</th>
+                        <th>Memoria</th>
+                        <th>SWAP</th>
+                        <th>FileSystem</th>
+                        <th>Estado</th>
+                    </tr>

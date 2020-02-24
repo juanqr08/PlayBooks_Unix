@@ -1,0 +1,69 @@
+---
+- name: 
+  shell: date | awk '{print $3 $4 $NF}'
+  register: Fecha
+  run_once: yes
+  delegate_to: localhost
+  
+- include: Vistas_RedHat.yml
+  when: ansible_distribution == "RedHat" or ansible_distribution == "OracleLinux"
+
+- include: Vistas_Solaris.yml
+  when: ansible_distribution == "Solaris"
+
+- name: "Creacion JS Final"
+  template: src=date.j2.js dest=/tmp/date.js
+  delegate_to: localhost
+
+- name: "Creacion Vista Final"
+  template: src=FinalHTML.j2.html dest=/tmp/FinalHTML.html 
+  run_once: true
+  delegate_to: localhost
+
+- name: "Union Total"
+  shell: "cat /tmp/{{ ansible_hostname }}.html >> /tmp/CheckMachine.html"
+  delegate_to: localhost
+
+- name: "Union Total"
+  shell: "cat /tmp/date{{ ansible_hostname }}.js >> /tmp/date.js"
+  delegate_to: localhost
+
+- name: "Union Total"
+  shell: "cat /tmp/FinalHTML.html >> /tmp/CheckMachine.html"
+  run_once: true
+  delegate_to: localhost
+
+- name: Creacion Carpeta 
+  file:
+      path: /home/ecf1900b/Ansible/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
+      state: directory
+      mode: u=rw,g=r,o=r
+  delegate_to: localhost
+  run_once: true
+
+- name: Movimiento Archivos
+  copy: src=/tmp/{{ item }} dest=/home/ecf1900b/Ansible/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
+  with_items:
+    - "CheckMachine.html"
+    - "date.js"
+  delegate_to: localhost
+  run_once: true
+
+- name: Eliminacion
+  file: 
+      path: "{{ item }}"
+      state: absent 
+  with_items:
+      - "/tmp/date{{ ansible_hostname }}.js"
+      - "/tmp/{{ ansible_hostname }}.html"
+      - "/tmp/FinalHTML.html"
+      - "/tmp/CheckMachine.html"
+      - "/tmp/date.js"
+  delegate_to: localhost
+  run_once: true
+
+- debug: msg='Por Favor ingresar a la URL:http://localhost:6060/uptimeUnix/Check_{{ Fecha.stdout }} Para poder validar la captura del UPTIME de las Maquinas'
+  run_once: yes
+
+- debug: msg='Creado por:Juan Jose Quintero R.'
+  run_once: yes
