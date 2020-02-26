@@ -1,0 +1,6 @@
+---
+- name: Captura de Estado Unix
+  hosts: all
+  gather_facts: yes
+  roles:
+    - Data_Unix

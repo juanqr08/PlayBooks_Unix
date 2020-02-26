@@ -1,0 +1,6 @@
+---
+- include: Vistas_RedHat.yml
+  when: ansible_distribution == "RedHat" or ansible_distribution == "OracleLinux"
+
+- include: Vistas_Solaris.yml
+  when: ansible_distribution == "Solaris"

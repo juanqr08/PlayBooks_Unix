@@ -1,0 +1,61 @@
+---
+- name: 
+  service_facts:
+  register: services_state
+
+- name: Validacion Servicios SSH
+  debug: msg={{ ansible_facts.services['sshd.service'] }}
+  ignore_errors: yes
+  register: SSHD
+
+- name: "Execute Command - RedHat"
+  shell: who -r | awk '{print $3 " " $4}'
+  register: uptime
+
+- name: "Estado Memoria"
+  shell: free | grep -i mem | awk '{print ($3*100)/$2}'
+  register: memory_porcent_free
+
+- name: Capturando Procesos de Mayor Consumo - Memoria
+  shell: for (( i=1;i<=5;i++));     do         PID_MEM=$(top -o %MEM -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $1}');         USER_MEM=$(top -o %MEM -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $2}');         PMEM=$(top -o %MEM -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $10}');         COMMAND_MEM=$(top -o %MEM -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $12}');         echo '<tr><td>'$PID_MEM'</td><td>'$USER_MEM'</td><td>'$PMEM'</td><td>'$COMMAND_MEM'</td></tr>';     done
+  register: Get_Mem
+
+- name: "Estado CPU"
+  shell: sar -u 1 1 | sed -n 4p | awk '{print $NF}'
+  register: cpu_porcent_free
+
+- name: Capturando Procesos de Mayor Consumo - CPU
+  shell: for (( i=1;i<=5;i++));     do         PID_CPU=$(top -o %CPU -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $1}');         USER_CPU=$(top -o %CPU -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $2}');         PCPU=$(top -o %CPU -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $9}'); COMMAND_CPU=$(top -o %CPU -b -n 1 -c|head -n 12|tail -5 | sed -n $i\p | awk '{print $12}');         echo '<tr><td>'$PID_CPU'</td><td>'$USER_CPU'</td><td>'$PCPU'</td><td>'$COMMAND_CPU'</td></tr>';     done
+  register: Get_CPU
+
+- name: "Estado Memoria Swap"
+  shell:  free | grep -i swap | awk '{print ($3*100)/$2}'
+  register: memory_swap_porcent
+
+- name: Analizando FileSystem
+  shell: FS=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | wc -l);if [[ $FS -ge 1 ]];     then         for (( i=1;i<=$FS;i++));         do     FileSystem=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | awk '{print $1}' | sed -n $i\p);             Size=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | awk '{print $2}' | sed -n $i\p);             Used=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | awk '{print $3}' | sed -n $i\p);             Avail=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | awk '{print $4}' | sed -n $i\p);             Use=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | awk '{print $5}' | sed -n $i\p);             Mounted=$(df -hP | sed 1d  | sed 's/%//g' | awk '{if ($5 >= 85) print ;}' | awk '{print $6}' | sed -n $i\p);             echo '<tr><td>'$FileSystem'</td><td>'$Size'</td><td>'$Used'</td><td>'$Avail'</td><td>'$Use'</td><td>'$Mounted'</td><td></tr>';         done;     fi
+  register: Filesystem
+  
+- name: Creacion Carpeta 
+  file:
+      path: /opt/Tomcat9/webapps/checkUnix
+      state: directory
+      mode: u=rw,g=rw,o=rw
+  delegate_to: localhost
+  run_once: true
+
+- name: Creacion Carpeta 
+  file:
+      path: /opt/Tomcat9/webapps/checkUnix/{{ ansible_hostname }}
+      state: directory
+      mode: u=rw,g=rw,o=rw
+  delegate_to: localhost
+
+- name: "Creacion Vista HTML"
+  template: src=index.html.j2.html dest=/opt/Tomcat9/webapps/checkUnix/{{ ansible_hostname }}/index.html
+  delegate_to: localhost
+
+- debug: msg='Por Favor ingresar a la URL:http://localhost:6060/checkUnix/{{ ansible_hostname }} Para poder validar la captura de los 7 Pasos de las Maquinas'
+
+- debug: msg='Creado por:Juan Jose Quintero R.'
+  run_once: yes
