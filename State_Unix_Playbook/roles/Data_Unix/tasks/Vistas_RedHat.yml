@@ -52,7 +52,10 @@
   delegate_to: localhost
 
 - name: "Creacion Vista HTML"
-  template: src=index.html.j2.html dest=/opt/Tomcat9/webapps/checkUnix/{{ ansible_hostname }}/index.html
+  template: 
+    src: index.html.j2.html 
+    dest: /opt/Tomcat9/webapps/checkUnix/{{ ansible_hostname }}/index.html
+    mode: '0777'
   delegate_to: localhost
 
 - debug: msg='Por Favor ingresar a la URL:http://localhost:6060/checkUnix/{{ ansible_hostname }} Para poder validar la captura de los 7 Pasos de las Maquinas'
