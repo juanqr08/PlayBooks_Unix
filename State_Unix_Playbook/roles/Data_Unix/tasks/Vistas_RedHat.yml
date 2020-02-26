@@ -40,7 +40,7 @@
   file:
       path: /opt/Tomcat9/webapps/checkUnix
       state: directory
-      mode: u=rw,g=rw,o=rw
+      mode: '0777'
   delegate_to: localhost
   run_once: true
 
@@ -48,7 +48,7 @@
   file:
       path: /opt/Tomcat9/webapps/checkUnix/{{ ansible_hostname }}
       state: directory
-      mode: u=rw,g=rw,o=rw
+      mode: '0777'
   delegate_to: localhost
 
 - name: "Creacion Vista HTML"
