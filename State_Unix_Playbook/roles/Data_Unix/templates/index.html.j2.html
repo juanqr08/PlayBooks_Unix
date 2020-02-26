@@ -390,8 +390,8 @@
                                 <tr>
                                     <td>Conectividad:</td>
                                     <td>{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}OK{% endif %}{% endif %}</td>
-                                    <td>Estado SSH:</td>
-                                    <td class="State_SSH">{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}running{% endif %}{% endif %}</td>
+                                    <td colspan="2">Estado SSH:</td>
+                                    <td class="State_SSH" colspan="2">{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}running{% endif %}{% endif %}</td>
                                 </tr>
                                 <tr>
                                     <th colspan="6" >Consumo CPU</th>
@@ -399,8 +399,8 @@
                                 <tr>
                                     <td>Porcentaje de Uso:</td>
                                     <td>{{ cpu_porcent_free.stdout }}</td>
-                                    <td>Estado</td>
-                                    <td class="State_CPU"></td>
+                                    <td colspan="2">Estado</td>
+                                    <td class="State_CPU" colspan="2"></td>
                                 </tr>
                                 <tr>
                                     <td>PID</td>
@@ -415,8 +415,8 @@
                                 <tr>
                                     <td>Porcentaje de Uso:</td>
                                     <td>{{ memory_porcent_free.stdout }}</td>
-                                    <td>Estado</td>
-                                    <td class="State_MEM"></td>
+                                    <td colspan="2">Estado</td>
+                                    <td class="State_MEM" colspan="2"></td>
                                 </tr>
                                 <tr>
                                     <td>PID</td>
@@ -430,8 +430,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">Porcentaje de Uso:</td>
-                                    <td class="SWAP1">{{ memory_swap_porcent.stdout }}</td>
-                                    <td class="State-SWAP">Estado</td>
+                                    <td class="SWAP1" colspan="2">{{ memory_swap_porcent.stdout }}</td>
+                                    <td class="State-SWAP" colspan="2">Estado</td>
                                 </tr>
                                 <tr>
                                     <th colspan="6" >FileSystem Saturados</th>
@@ -439,8 +439,8 @@
                                 <tr>
                                     <td>Cantidad:</td>
                                     <td class="State-Disc">0</td>
-                                    <td>Estado:</td>
-                                    <td class="State-DiscF">0</td>
+                                    <td colspan="2">Estado:</td>
+                                    <td class="State-DiscF" colspan="2">0</td>
                                 </tr>
                                 <tr>
                                     <td>Filesystem</td>
