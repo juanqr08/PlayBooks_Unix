@@ -1,0 +1,125 @@
+---
+- name: 
+  service_facts:
+  register: services_state
+
+- name: Capturando Ultimo Reinicio
+  shell: who -r | awk '{print $3 " " $4}'
+  register: UPTIME
+
+- name: Validacion Servicios IPTables
+  debug: msg={{ ansible_facts.services['iptables.service'] }}
+  ignore_errors: yes
+  register: IPTABLES
+
+- name: Validacion Selinux
+  shell: cat /etc/selinux/config | grep "SELINUX=" | grep -v "#"| awk -F= '{print $2}'
+  register: SELINUX
+
+- name: Validacion Servicios SNMP
+  debug: msg={{ ansible_facts.services['snmpd.service'] }}
+  ignore_errors: yes
+  register: SNMPD
+
+- name: Validacion Comunidad SNMP
+  shell: grep rocommunity /etc/snmp/snmpd.conf 2> /dev/null | head -n 1 | awk '{print $2}'
+  register: SNMPD_COMMUNITY
+
+- name: Validacion Servicios NTP
+  debug: msg={{ ansible_facts.services['ntpd.service'] }}
+  ignore_errors: yes
+  register: NTPD
+
+- name: Validacion Configuracion NTP
+  shell: grep -v "#" /etc/ntp.conf | grep server | awk '{print $2}'
+  register: CONFIGURE_NTPD
+
+- name: Validacion Configuracion SSH
+  shell: "value=0;x='LoginGraceTime PermitRootLogin AllowGroups Banner MaxStartups LogLevel IgnoreRhosts Ciphers MACs';for i in $x;  do  y=$(grep $i /etc/ssh/sshd_config | grep -v '#');  if [[ $y == '' ]]; then value=$(($value+1));echo '<tr><td colspan='3'>Parametro Faltante:' $i '</td></tr>';fi; done; if [[ $value -eq 0  ]]; then echo '<tr><td></td></tr>'; fi"
+  register: CONFIGURACION_SSH
+
+- name: Cantidad Parametros Faltantes SSH
+  shell: value=0;x='LoginGraceTime PermitRootLogin AllowGroups Banner MaxStartups LogLevel IgnoreRhosts Ciphers MACs';for i in $x;  do  y=$(grep $i /etc/ssh/sshd_config | grep -v '#'); if [[ $y == '' ]]; then value=$(($value+1));fi; done; echo $(($value+1))
+  register: VALUE_SSH
+
+- name: Validacion Rutas Estaticas
+  shell: value=0;x='172.31.239.53 172.18.183.54 10.244.170.0 172.22.16.0 172.22.108.0 172.22.108.119 172.22.108.120 172.22.26.64 10.244.138.0 10.59.208.0 172.18.191.64 172.22.1.65';for i in $x; do y=$(netstat -nr | grep "$i");z=$(grep $i /etc/sysconfig/network-scripts/route*); if [[ $y == '' && $z == '' ]]; then  value=$(($value+1));echo '<tr><td colspan="3">Falta Ruta:' $i '</td></tr>'; elif [[ $y == '' && $z != '' ]]; then value=$(($value+1));echo '<tr><td>Falta Reiniciar para Ruta:' $i '</td></tr>'; elfi [[ $y != '' && $z == '' ]]; value=$(($value+1));echo '<tr><td colspan="3">Falta Reiniciar para Ruta:' $i '</td></tr>'; fi; done;if [[ $value -lt 1 ]]; then  echo '<td> </td>'; fi
+  register: CONFIGURACION_RUTAS
+
+- name: Cantidad Rutas Estaticas
+  shell: value=0;x='172.31.239.53 172.18.183.54 10.244.170.0 172.22.16.0 172.22.108.0 172.22.108.119 172.22.108.120 172.22.26.64 10.244.138.0 10.59.208.0 172.18.191.64 172.22.1.65';for i in $x; do y=$(netstat -nr | grep "$i");z=$(grep $i /etc/sysconfig/network-scripts/route*); if [[ $y == ''&& $z == '' ]]; then value=$(($value+1)); elif [[ $y == '' && $z != '' ]]; then value=$(($value+1)); elfi [[ $y != '' && $z == '' ]];value=$(($value+1)); fi; done; echo $(($value+1))
+  register: VALUE_RUTAS
+
+- name: Validacion Configuracion de Grupos
+  shell: "grep admtmx /etc/group | awk  -F: '{print $1}'"
+  register: GRUPOS
+
+- name: Validacion Existencia Usuarios
+  shell: "value=0;x='ecf2547a ecf1900a icf7531a icf3361b';for i in $x ; do y=$(grep $i /etc/passwd |  awk -F: '{print $1,$5}'); if [[ $y == '' ]]; then value=$(($value+1));echo 'Falta el Usuario:' $i; fi; done;if [[ $value -le 1 ]]; then  echo '<td> </td>'; fi"
+  register: USUARIOS
+
+- name: Validacion Existencia de Grupos Monitoreo
+  shell: "value=0;for i in monitoring medusa hpucmdb ; do y=$(grep $i /etc/group | awk  -F: '{print $1}'); if [[ $y == '' ]]; then value=$(($value+1));echo '<tr><td colspan='3'>Falta Grupo:' $i'</td></tr>'; fi; done;if [[ $value -le 1 ]]; then  echo '<td> </td>'; fi"
+  register: GRUPOS_MONITOREO
+
+- name: Cantidad de Grupos Monitoreo Faltantes
+  shell: "value=0;for i in monitoring medusa hpucmdb ; do y=$(grep $i /etc/group | awk  -F: '{print $1}'); if [[ $y == '' ]]; then value=$(($value+1)); fi; done; echo $(($value+1))"
+  register: VALUE_GRUPOS_MONITOREO
+
+- name: Validacion Existencia de Usuarios Monitoreo 
+  shell: value=0;for i in monitoring medusa pim hpucmdb ; do y=$(grep -i $i /etc/passwd |  awk '{print $1}'); if [[ $y == '' ]]; then value=$(($value+1));echo '<tr><td colspan="3">Falta Usuario:' $i'</td></tr>'; fi; done;if [[ $value -le 1 ]]; then  echo '<td> </td>'; fi
+  register: USUARIOS_MONITOREO
+
+- name: Cantidad de Usuarios Monitoreo Faltantes
+  shell: "value=0;for i in monitoring medusa pim hpucmdb ; do y=$(grep -i $i /etc/passwd |  awk '{print $1}'); if [[ $y == '' ]]; then value=$(($value+1)); fi; done; echo $(($value+1))"
+  register: VALUE_USUARIOS_MONITOREO
+
+- debug: msg='Cantidad Ruetas = {{ CONFIGURACION_RUTAS.stdout }}'
+
+- name: Validacion Configuracion Sudoers
+  shell: value=0;for i in %admtmx medusa pim ; do y=$(grep $i /etc/sudoers | grep -v '#'); if [[ $y == '' ]]; then value=$(($value+1));echo '<tr><td colspan="3">Falta Configuracion:' $i'</td></tr>'; fi; done;if [[ $value -le 1 ]]; then  echo '<td> </td>'; fi
+  register: SUDOERS
+
+- name: Cantidad de Configuracion Sudoers Faltante
+  shell: "value=0;for i in %admtmx medusa pim ; do y=$(grep $i /etc/sudoers | grep -v '#'); if [[ $y == '' ]]; then value=$(($value+1)); fi; done; echo $(($value+1))"
+  register: VALUE_SUDOERS
+
+- name: Validacion Script Memoria RAM
+  stat:
+    path: /opt/memoria.sh
+  register: MEMORY_FILE
+
+- name: Validacion Crontab Script Memoria RAM
+  shell: x=$(crontab -l | grep memoria.sh | grep -v '#'); if [[ $x == '' ]]; then  echo 'FAILED'; else echo 'OK'; fi
+  register: CRONTAB_MEMORY
+  when: MEMORY_FILE.stat.exists == True
+
+- name: Validacion Crontab Script Memoria RAM
+  shell: echo 'FAILED'
+  register: CRONTAB_MEMORY
+  when: MEMORY_FILE.stat.exists == False
+
+- name: Validacion Agente Backup
+  shell: simpana status
+  register: SIMPANA
+  ignore_errors: yes
+
+- name: Validacion Tipo de Servidor 
+  shell: virt-what
+  register: TIPO
+  ignore_errors: yes
+
+- name: Validacion de VMTOOLS
+  shell: vmtoolsd -v
+  register: VMTOOL
+  ignore_errors: yes
+
+- name: Validacion Servicio MultiPath
+  debug: msg={{ ansible_facts.services['multipathd.service'] }}
+  ignore_errors: yes
+  register: MULTIPATH
+
+- name: Validacion Servicio NFS
+  debug: msg={{ ansible_facts.services['nfs.service'] }}
+  ignore_errors: yes
+  register: NFS

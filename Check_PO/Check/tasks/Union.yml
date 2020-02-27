@@ -1,0 +1,106 @@
+---
+- name: 
+  shell: date | awk '{print $3 $4 $NF}'
+  register: Fecha
+  run_once: yes
+
+- name: Creacion Carpeta - HTML
+  file:
+      path: /opt/Tomcat9/webapps/CheckPaso
+      state: directory
+      mode: '777'
+  delegate_to: localhost
+  run_once: true
+
+- name: Creacion Carpeta 
+  file:
+      path: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}
+      state: directory
+      mode: '777'
+  delegate_to: localhost
+  run_once: true
+
+- name: Creacion Vista Inicial
+  template:
+      src: index.html.j2
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/index.html
+      mode: '777'
+  run_once: true
+  delegate_to: localhost
+
+- name: Creacion Vista Inicial (Styles)
+  template:
+      src: Style.css.j2.css
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}Style.css
+      mode: '777'
+  delegate_to: localhost
+
+- name: Creacion Vista Inicial (HTML)
+  template:
+      src: intermediate.html.j2.html
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/intermediate.html
+      mode: '777'
+  run_once: true
+  delegate_to: localhost
+
+- name: Creacion de Botones
+  template:
+      src: botones.html.j2.html
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}Botones.html
+      mode: '777'
+  delegate_to: localhost      
+
+- name: Creacion de Tablas
+  template:
+      src: tablas.html.j2.html
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}Tabla.html
+      mode: '777'
+  delegate_to: localhost    
+  
+- name: Creacion de Primer Script
+  template:
+      src: ScriptBotones.js.j2.js
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}ScriptBotones.js
+      mode: '777'
+  delegate_to: localhost    
+
+- name: Creacion de Segundo Script
+  template:
+      src: ScriptMain.js.j2.js
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/ScriptMain.js
+      mode: '777'
+  delegate_to: localhost    
+
+- name: Creacion de Tercer Script
+  template:
+      src: ScriptAnalisis.js.j2.js
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}ScriptAnalisis.js
+      mode: '777'
+  delegate_to: localhost    
+
+- name: Creacion Script de Analisis
+  shell: cat /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/*ScriptAnalisis.js >> /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/AnalisisCompleto.js
+  delegate_to: localhost
+  run_once: true
+
+- name: Creacion del Cierre
+  template:
+      src: Final.html.j2.html
+      dest: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/Final.html
+      mode: '777'
+  delegate_to: localhost   
+  run_once: true
+
+- name: Creacion Vista HTML
+  shell: cat /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ item }} >> /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/index.html
+  with_items:
+    - "*Style.css"
+    - "intermediate.html"
+    - "*Botones.html"
+    - "*Tabla.html"
+    - "*ScriptBotones.js"
+    - "ScriptMain.js"
+    - "AnalisisCompleto.js"
+    - "Final.html"
+  delegate_to: localhost
+  run_once: true

@@ -1,0 +1,22 @@
+---
+- name: Limpiando Archivos...
+  file:
+      path: /opt/Tomcat9/webapps/CheckPaso/Check_{{ Fecha.stdout }}/{{ item }}
+      state: absent
+  with_items:
+    - "{{ ansible_hostname }}Style.css"
+    - "intermediate.html"
+    - "{{ ansible_hostname }}Botones.html"
+    - "{{ ansible_hostname }}Tabla.html"
+    - "{{ ansible_hostname }}ScriptBotones.js"
+    - "{{ ansible_hostname }}ScriptAnalisis.js"
+    - "ScriptMain.js"
+    - "AnalisisCompleto.js"
+    - "Final.html"
+  delegate_to: localhost
+
+- debug: msg='Por Favor ingresar a la URL:http://172.22.16.179:443/CheckPaso/Check_{{ Fecha.stdout }} Para poder validar el Check Paso Operacion'
+  run_once: yes
+
+- debug: msg='Creado por:Juan Jose Quintero R.'
+  run_once: yes

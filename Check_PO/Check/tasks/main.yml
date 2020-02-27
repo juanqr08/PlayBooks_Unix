@@ -1,0 +1,12 @@
+---
+
+
+- name: Verificacion de Sistema Operativo
+  include: RHEL7.yml
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+#- name: Debug
+#  debug:
+#    var: services_state
+
+- include: Union.yml
+- include: Eliminacion.yml

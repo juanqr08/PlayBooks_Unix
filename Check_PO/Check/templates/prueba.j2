@@ -1,0 +1,114 @@
+{{ UPTIME.stdout }}
+
+{% if  IPTABLES.failed  == true %}
+OK
+{% else %}
+{{ IPTABLES.msg.state }} {{ IPTABLES.msg.status }}
+{% if IPTABLES.msg.status != 'running' %}
+OK
+{% else %}
+FAILED
+{% endif %}
+{% endif %}
+
+{% if  SNMPD.failed  == true %}
+FAILED
+{% else %}
+{% if SNMPD.msg.status != 'running' %}
+FAILED
+{% else %}
+OK
+{% endif %}
+{% endif %}
+
+{% if  SNMPD_COMMUNITY.stdout  == '' %}
+FAILED
+{% elif SNMPD_COMMUNITY.stdout == "docrogestion" %}
+{{ SNMPD_COMMUNITY.stdout }}
+{% elif SNMPD_COMMUNITY.stdout == "$HP4CMDB" %}
+{{ SNMPD_COMMUNITY.stdout }}
+{% endif %}
+
+{% if  NTPD.failed  == true %}
+FAILED
+{% else %}
+{% if NTPD.msg.status != 'running' %}
+FAILED
+{% else %}
+OK
+{% endif %}
+{% endif %}
+
+
+{% if  CONFIGURE_NTPD.stdout  == '' %}
+FAILED
+{% elif CONFIGURE_NTPD.stdout == "172.31.239.53" %}
+OK
+{% endif %}
+
+{{ CONFIGURACION_SSH.stdout }}
+
+{{ CONFIGURACION_RUTAS.stdout }}
+
+{% if GRUPOS.stdout == '' %}
+FAILED
+{% else %}
+CUMPLE
+{% endif %}
+
+{{ USUARIOS.stdout }}
+
+{{ GRUPOS_MONITOREO.stdout }}
+
+{{ USUARIOS_MONITOREO.stdout }}
+
+{{ SUDOERS.stdout }}
+
+{% if MEMORY_FILE.stat.exists == true %}
+OK FILE
+{% else %}
+FAILED FILE
+{% endif %}
+
+{{ CRONTAB_MEMORY.stdout }}
+
+{% if SIMPANA.stdout == '' %}
+FAILED SIMPANA
+{% else %}
+OK {{ SIMPANA.stdout }}
+{% endif %}
+
+{% if TIPO.stdout == '' %}
+FISICA
+{% else %}
+VIRTUAL
+{% if VMTOOL.stdout == '' %}
+FAILED VMTOOL
+{% else %}
+OK VMTOOL
+{% endif %}
+{% endif %}
+
+{% if TIPO.stdout == '' %}
+{% if MULTIPATH.failed == true %}
+FAILED NO EXISTE SERVICIO MULTIPATH
+{% else %}
+{% if MULTIPATH.msg.state != 'running' %}
+FAILED SERVICIO DETENIDO
+{% else %}
+OK SERVICIO ACTIVO
+{% endif %}
+{% endif %}
+{% else %}
+N/A N/A
+{% endif %}
+
+{% if  NFS.failed  == true %}
+FAILED NFS
+{% else %}
+{% if NFS.msg.state != 'running' %}
+FAILED SERVICIO DETENIDO
+{% else %}
+OK SERVICIO ACTIVO
+{% endif %}
+{% endif %}
