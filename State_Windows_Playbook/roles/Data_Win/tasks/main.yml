@@ -1,0 +1,29 @@
+---
+- name: Verificando...
+  raw: ((Get-Host).CurrentUICulture).name
+  register: Languaje
+
+- name: Creacion Carpeta - HTML
+  file:
+      path: /opt/Tomcat9/webapps/checkWin
+      state: directory
+      mode: u=rw,g=rw,o=rw
+  delegate_to: localhost
+  run_once: true
+
+- name: Creacion Carpeta 
+  file:
+      path: /opt/Tomcat9/webapps/checkWin/{{ ansible_hostname }}
+      state: directory
+      mode: u=rw,g=rw,o=rw
+  delegate_to: localhost
+
+- name: Verificando Lenguaje ...
+  include: Win_ES.yml
+  when: Languaje.stdout == "es-ES\r\n"
+
+- name: Verificando Lenguaje ...
+  include: Win_US.yml
+  when: Languaje.stdout == "es-US\r\n"
+
+- debug: msg={{ Languaje.stdout }}

@@ -1,0 +1,14 @@
+$Disc = Get-WmiObject Win32_LogicalDisk
+@(foreach($Disc_Value in $Disc){
+        $Size = [math]::floor($Disc_Value.Size/1GB)
+    $Free = [math]::floor($Disc_Value.FreeSpace/1GB)
+    $Use = [math]::floor($Size - $Free)
+      if ($Size -eq 0) {
+                $Porcent_Use = 0
+        $Porcent_Free = $Free
+    } else{
+                $Porcent_Use = [math]::floor(($Use*100)/$Size)
+        $Porcent_Free = [math]::floor(($Free*100)/$Size)
+    }
+    '<tr><td>' + $Disc_Value.DeviceID + '</td><td>' + $Size + '</td><td class=Disc>' + $Porcent_Use + '</td><td>' + $Porcent_Free + '</td></tr>'
+})    

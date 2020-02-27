@@ -1,0 +1,43 @@
+---
+- name: Get Status RDP
+  raw: (Get-Service 'TermService').Status
+  register: RDP
+
+- name: Get CPU Percentage
+  raw: ((Get-Counter '\\{{ ansible_hostname }}\procesador(_total)\% de tiempo de procesador' ).CounterSamples).CookedValue
+  register: Percentage_CPU
+
+- name: Get Memory Percentage
+  raw: ((Get-Counter '\\{{ ansible_hostname }}\memoria\% de bytes confirmados en uso' ).CounterSamples).CookedValue
+  register: Percentage_MEM
+
+- name: Get Process Memory
+  raw: $Processes_Mem = Get-Process -IncludeUserName | Sort-Object -Property WS | Select-Object Id,Name,PM,VM,UserName -Last 5;@(foreach($Proc in $Processes_Mem){'<tr><td>' + $Proc.Id + '</td>' + '<td>'+ $Proc.Name + '</td><td>' + $Proc.UserName + '</td><td>' +[math]::floor($Proc.VM/1MB) +'</td></tr>'})
+  register: Get_MEM
+
+- name: Get Process CPU
+  raw: $Processes_CPU = Get-Process -IncludeUserName | Sort CPU -Descending | Select-Object -First 5;@(foreach($Proc_CPU in $Processes_CPU){'<tr><td>' + $Proc_CPU.Id + '</td>' + '<td>'+ $Proc_CPU.Name + '</td><td>' + $Proc_CPU.UserName + '</td><td>' + $Proc_CPU.CPU +'</td></tr>'})
+  register: Get_CPU
+
+- name: Get Count Disc
+  template: src=Disc.ps1.j2 dest={{ ansible_user_dir }}\Disc.ps1
+
+- name: Get Count Disc
+  template: src=DiscAll.ps1.j2 dest={{ ansible_user_dir }}\DiscAll.ps1
+
+- name: Get Data Disc
+  raw: '{{ ansible_user_dir }}\Disc.ps1'
+  register: Get_Disc
+
+- name: Get Data Disc
+  raw: '{{ ansible_user_dir }}\DiscAll.ps1'
+  register: Get_DiscAll
+
+- name: "Creacion Vista HTML"
+  template: src=index.html.j2 dest=/opt/Tomcat9/webapps/checkWin/{{ ansible_hostname }}/index.html
+  delegate_to: localhost
+
+- debug: msg='Por Favor ingresar a la URL:http://172.22.16.179:443/checkWin/{{ ansible_hostname }} Para poder validar la captura de los 7 Pasos de las Maquinas'
+
+- debug: msg='Creado por:Juan Jose Quintero R.'
+  run_once: yes
