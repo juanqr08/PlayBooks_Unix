@@ -7,7 +7,7 @@
   file:
       path: /opt/Tomcat9/webapps/checkWin
       state: directory
-      mode: u=rw,g=rw,o=rw
+      mode: '777'
   delegate_to: localhost
   run_once: true
 
@@ -15,7 +15,7 @@
   file:
       path: /opt/Tomcat9/webapps/checkWin/{{ ansible_hostname }}
       state: directory
-      mode: u=rw,g=rw,o=rw
+      mode: '777'
   delegate_to: localhost
 
 - name: Verificando Lenguaje ...
