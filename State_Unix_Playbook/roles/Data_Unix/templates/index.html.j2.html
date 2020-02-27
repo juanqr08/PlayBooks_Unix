@@ -398,7 +398,7 @@
                                 </tr>
                                 <tr>
                                     <td>Porcentaje de Uso:</td>
-                                    <td>{{ cpu_porcent_free.stdout }}</td>
+                                    <td class="Porcent_CPU1">{{ cpu_porcent_free.stdout }}</td>
                                     <td colspan="2">Estado</td>
                                     <td class="State_CPU" colspan="2"></td>
                                 </tr>
@@ -494,6 +494,7 @@
         }
         var PCPU = 100 - $('.Porcent_CPU').text().replace(',', '.');
         $('.Porcent_CPU').html(PCPU)
+        $('.Porcent_CPU1').html(PCPU)
         if (PCPU >= 80 && PCPU < 90) {
             $('.State_CPU').html('WARNING')
             $('.State_CPU').attr('class','YELLOW')
