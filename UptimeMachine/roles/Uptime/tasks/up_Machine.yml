@@ -43,7 +43,7 @@
   run_once: true
   delegate_to: localhost
   
- - name: "Union Total"
+- name: "Union Total"
   shell: "cat /tmp/CheckMachine.html >> /tmp/index.html"
   run_once: true
   delegate_to: localhost
