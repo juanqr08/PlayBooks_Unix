@@ -141,3 +141,15 @@ $(CNFS).each(function () {
         $('.{{ ansible_hostname }}StateNFS').attr('class','RED')
     }
 });
+
+VMTOOLS = ('.VM-{{ ansible_hostname }}');
+$(VMTOOLS).each(function () {
+    StateVMTOOLS = $(this).text(); 
+    if (StateVMTOOLS == 'OK' || StateVMTOOLS == 'N/A') {
+        $('.{{ ansible_hostname }}StateVMTOOLS').html('OK')
+        $('.{{ ansible_hostname }}StateVMTOOLS').attr('class','GREEN')
+    }else{
+        $('.{{ ansible_hostname }}StateVMTOOLS').html('FAILED')
+        $('.{{ ansible_hostname }}StateVMTOOLS').attr('class','RED')
+    }
+});
