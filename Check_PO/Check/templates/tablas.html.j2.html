@@ -27,17 +27,8 @@
         <tr>
             <th class="Menu-Lateral">VMTOOLS</th>
             <td>OK/ "N/A"</td>
-            <td class="VM-{{ ansible_hostname }}">{% if TIPO.stdout == '' %}
-                N/A
-                {% else %}
-                    {% if VMTOOL.stdout == '' %}
-                FAILED (No Existe Commando)
-                    {% else %}
-                OK
-                    {% endif %}
-                {% endif %}
-            </td>
-            <td>ESTADO</td>
+            <td class="VM-{{ ansible_hostname }}">{% if TIPO.stdout == '' %}N/A{% else %}{% if VMTOOL.stdout == '' %}FAILED (No Existe Commando){% else %}OK{% endif %}{% endif %}</td>
+            <td class='{{ ansible_hostname }}StateVMTOOLS'>ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Ultimo Reinicio</th>
