@@ -35,6 +35,7 @@
 
 - name: "Creacion Vista HTML"
   template: src=index.html.j2 dest=/opt/Tomcat9/webapps/checkWin/{{ ansible_hostname }}/index.html
+  mode: '777'
   delegate_to: localhost
 
 - debug: msg='Por Favor ingresar a la URL:http://172.22.16.179:443/checkWin/{{ ansible_hostname }} Para poder validar la captura de los 7 Pasos de las Maquinas'
