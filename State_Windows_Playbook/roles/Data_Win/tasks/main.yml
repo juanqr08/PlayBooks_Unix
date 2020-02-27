@@ -3,6 +3,11 @@
   raw: ((Get-Host).CurrentUICulture).name
   register: Languaje
 
+- name: Lenguaje
+  debug: msg='Espanol'
+  when: Languaje.stdout == "es-ES\r\n"
+
+
 - name: Creacion Carpeta - HTML
   file:
       path: /opt/Tomcat9/webapps/checkWin
