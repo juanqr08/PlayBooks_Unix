@@ -323,7 +323,7 @@
                                 </tr>
                                 <tr>
                                     <td>Porcentaje de Uso:</td>
-                                    <td class="Porcent_MEM">{{ memory_porcent_free.stdout }}</td>
+                                    <td class="Porcent_MEM" category="{{ memory_porcent_free.stdout }}">{{ memory_porcent_free.stdout }}</td>
                                     <td>Estado</td>
                                     <td class="State_MEM"></td>
                                 </tr>
@@ -414,7 +414,7 @@
                                 </tr>
                                 <tr>
                                     <td>Porcentaje de Uso:</td>
-                                    <td>{{ memory_porcent_free.stdout }}</td>
+                                    <td class="Porcent_MEM1" category="{{ memory_porcent_free.stdout }}">{{ memory_porcent_free.stdout }}</td>
                                     <td colspan="2">Estado</td>
                                     <td class="State_MEM" colspan="2"></td>
                                 </tr>
@@ -540,6 +540,26 @@
         }
 
         var PMEM = $('.Porcent_MEM').text().replace(',', '.');
+        $('.Porcent_MEM').attr('category',PMEM)
+        $('.Porcent_MEM').attr('category',PMEM)
+        
+        $('.Porcent_MEM').each(function (){
+        var points = '...';
+        if ($(this).attr('category').length > 5){
+                var textEnd = ($(this).attr('category')).substring(0,5) + points;
+                console.log(textEnd);
+                $(this).html(textEnd);
+            }
+        });
+        
+        $('.Porcent_MEM1').each(function (){
+        var points = '...';
+        if ($(this).attr('category').length > 5){
+                var textEnd = ($(this).attr('category')).substring(0,5) + points;
+                console.log(textEnd);
+                $(this).html(textEnd);
+            }
+        });
         console.log(PMEM)
         if (PMEM >= 70 && PMEM < 90) {
             $('.State_MEM').html('WARNING')
