@@ -3,10 +3,6 @@
   raw: ((Get-Host).CurrentUICulture).name
   register: Languaje
 
-- name: Lenguaje
-  debug: msg='Espanol'
-  when: Languaje.stdout == "en-US\r\n"
-
 - name: Creacion Carpeta - HTML
   file:
       path: /opt/Tomcat9/webapps/checkWin
@@ -21,10 +17,6 @@
       state: directory
       mode: '777'
   delegate_to: localhost
-
-- name: Verificando Lenguaje ...
-  include: Win_ES.yml
-  when: Languaje.stdout == "es-ES\r\n"
 
 - name: Verificando Lenguaje ...
   include: Win_US.yml
