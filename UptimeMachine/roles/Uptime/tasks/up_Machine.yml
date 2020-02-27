@@ -42,6 +42,11 @@
   shell: "cat /tmp/FinalHTML.html >> /tmp/CheckMachine.html"
   run_once: true
   delegate_to: localhost
+  
+ - name: "Union Total"
+  shell: "cat /tmp/CheckMachine.html >> /tmp/index.html"
+  run_once: true
+  delegate_to: localhost
 
 - name: Creacion Carpeta 
   file:
@@ -54,8 +59,7 @@
 - name: Movimiento Archivos
   copy: src=/tmp/{{ item }} dest=/opt/Tomcat9/webapps/uptimeUnix/Check_{{ Fecha.stdout }}
   with_items:
-    - "CheckMachine.html"
-    - "date.js"
+    - "index.html"
   delegate_to: localhost
   run_once: true
 
