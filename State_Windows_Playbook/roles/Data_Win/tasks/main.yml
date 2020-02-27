@@ -5,8 +5,7 @@
 
 - name: Lenguaje
   debug: msg='Espanol'
-  when: Languaje.stdout == "es-ES\r\n"
-
+  when: Languaje.stdout == "en-US\r\n"
 
 - name: Creacion Carpeta - HTML
   file:
