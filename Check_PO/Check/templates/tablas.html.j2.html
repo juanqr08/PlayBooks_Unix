@@ -3,8 +3,8 @@
     <tbody>
         <tr>
             <th class="Menu-Superior">ITEM</th>
-            <th class="Menu-Superior">OBTENIDO</th>
             <th class="Menu-Superior">EXPECTATIVA</th>
+            <th class="Menu-Superior">OBTENIDO</th>
             <th class="Menu-Superior">ESTADO</th>
         </tr>
         <tr>
@@ -26,6 +26,7 @@
         </tr>
         <tr>
             <th class="Menu-Lateral">VMTOOLS</th>
+            <td>OK/ "N/A"</td>
             <td class="VM-{{ ansible_hostname }}">{% if TIPO.stdout == '' %}
                 N/A
                 {% else %}
@@ -36,43 +37,42 @@
                     {% endif %}
                 {% endif %}
             </td>
-            <td>OK</td>
             <td>ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Ultimo Reinicio</th>
-            <td class="Last_Boot-{{ ansible_hostname }} {{ ansible_hostname }}vdate">{{ UPTIME.stdout }}</td>
             <td>Menor o Igual a 30 dias </td>
+            <td class="Last_Boot-{{ ansible_hostname }} {{ ansible_hostname }}vdate">{{ UPTIME.stdout }}</td>
             <td class="{{ ansible_hostname }}State state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">FIREWALL</th>
-            <td class="{{ ansible_hostname }}IPTABLES">{% if  IPTABLES.failed  == true %}OK{% else %}{% if IPTABLES.msg.status != 'running' %}OK{% else %}FAILED{% endif %}{% endif %}</td>
-            <td>OK</td>
+            <td>STOPPED / "N/E"</td>
+            <td class="{{ ansible_hostname }}IPTABLES">{% if  IPTABLES.failed  == true %}N/E{% else %}{% if IPTABLES.msg.status != 'running' %}STOPPED{% else %}STARTED{% endif %}{% endif %}</td>
             <td class="{{ ansible_hostname }}StateIP state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">SNMP</th>
-            <td class="{{ ansible_hostname }}SNMP">{% if  SNMPD.failed  == true %}FAILED{% else %}{% if SNMPD.msg.status != 'running' %}FAILED{% else %}OK{% endif %}{% endif %}</td>
-            <td>OK</td>
+            <td>STARTED</td>
+            <td class="{{ ansible_hostname }}SNMP">{% if  SNMPD.failed  == true %}N/E{% else %}{% if SNMPD.msg.status != 'running' %}STOPPED{% else %}STARTED{% endif %}{% endif %}</td>
             <td class="{{ ansible_hostname }}StateSNMP state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Comunidad SNMP</th>
-            <td class="{{ ansible_hostname }}SNMPC">{% if  SNMPD_COMMUNITY.stdout  == '' %}FAILED{% elif SNMPD_COMMUNITY.stdout == "docrogestion" or SNMPD_COMMUNITY.stdout == "$HP4CMDB" %}OK{% endif %}</td>
             <td>OK</td>
+            <td class="{{ ansible_hostname }}SNMPC">{% if  SNMPD_COMMUNITY.stdout  == '' %}FAILED{% elif SNMPD_COMMUNITY.stdout == "docrogestion" or SNMPD_COMMUNITY.stdout == "$HP4CMDB" %}OK{% endif %}</td>
             <td class="{{ ansible_hostname }}StateSNMPC state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">NTP</th>
-            <td class="{{ ansible_hostname }}NTP">{% if  NTPD.failed  == true %}FAILED{% else %}{% if NTPD.msg.status != 'running' %}FAILED{% else %}OK{% endif %}{% endif %}</td>
-            <td>OK</td>
+            <td>STARTED</td>
+            <td class="{{ ansible_hostname }}NTP">{% if  NTPD.failed  == true %}N/E{% else %}{% if NTPD.msg.status != 'running' %}STOPPED{% else %}STARTED{% endif %}{% endif %}</td>
             <td class="{{ ansible_hostname }}StateNTP state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Configuracion NTP</th>
-            <td class="{{ ansible_hostname }}NTPC">{% if  CONFIGURE_NTPD.stdout  == '' %}FAILED{% elif CONFIGURE_NTPD.stdout == "172.31.239.53" %}OK{% endif %}</td>
             <td >OK</td>
+            <td class="{{ ansible_hostname }}NTPC">{% if  CONFIGURE_NTPD.stdout  == '' %}FAILED (No tiene la IP 172.31.239.53){% elif CONFIGURE_NTPD.stdout == "172.31.239.53" %}OK{% endif %}</td>
             <td class="{{ ansible_hostname }}StateNTPC state">ESTADO</td>
         </tr>
         <tr>
@@ -100,38 +100,39 @@
         {% if SUDOERS.stdout != '<td> </td>' %}{{ SUDOERS.stdout }}{% else %}{% endif %}
         <tr>
             <th class="Menu-Lateral">Scritp Memoria RAM</th>
-            <td class="{{ ansible_hostname }}SMR">{% if MEMORY_FILE.stat.exists == true %}OK{% else %}FAILED (NO EXISTE){% endif %}</td>
             <td>OK</td>
+            <td class="{{ ansible_hostname }}SMR">{% if MEMORY_FILE.stat.exists == true %}OK{% else %}FAILED (NO EXISTE){% endif %}</td>
             <td class="{{ ansible_hostname }}StateSMR state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Crontab Memoria RAM</th>
-            <td class="{{ ansible_hostname }}CSMR">{% if CRONTAB_MEMORY.changed == false %}FAILED{% else %}{{ CRONTAB_MEMORY.stdout }}{% endif %}</td>
             <td>OK</td>
+            <td class="{{ ansible_hostname }}CSMR">{% if CRONTAB_MEMORY.changed == false %}FAILED{% else %}{{ CRONTAB_MEMORY.stdout }}{% endif %}</td>
             <td class="{{ ansible_hostname }}StateCSMR state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">SIMPANA</th>
-            <td class="{{ ansible_hostname }}SIMPANA">{% if SIMPANA.stdout == '' %}FAILED (NO EXISTE){% else %}OK{% endif %}</td>
             <td>OK</td>
+            <td class="{{ ansible_hostname }}SIMPANA">{% if SIMPANA.stdout == '' %}FAILED (NO EXISTE){% else %}OK{% endif %}</td>
             <td class="{{ ansible_hostname }}StateSIMPANA state">ESTADO</td>
         </td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Servicio MultiPath</th>
+            <td>OK/ "N/A"</td>
             <td class="{{ ansible_hostname }}MultiPath">{% if TIPO.stdout == '' %}{% if MULTIPATH.failed == true %}FAILED (NO EXISTE SERVICIO MULTIPATH){% else %}{% if MULTIPATH.msg.state != 'running' %}FAILED (SERVICIO DETENIDO){% else %}OK{% endif %}{% endif %}{% else %}N/A{% endif %}</td>
-            <td>OK/"N/A"</td>
             <td class="{{ ansible_hostname }}StateMultiPath state">ESTADO</td>
         </tr>
         <tr>
             <th class="Menu-Lateral">Servicio NFS</th>
-            <td class="{{ ansible_hostname }}NFS">{% if  NFS.failed  == true %}FAILED (NO EXISTE SERVICIO){% else %}{% if NFS.msg.state != 'running' %}FAILED (SERVICIO DETENIDO){% else %}OK{% endif %}{% endif %}</td>
             <td>OK</td>
+            <td class="{{ ansible_hostname }}NFS">{% if  NFS.failed  == true %}FAILED (NO EXISTE SERVICIO){% else %}{% if NFS.msg.state != 'running' %}FAILED (SERVICIO DETENIDO){% else %}OK{% endif %}{% endif %}</td>
             <td class="{{ ansible_hostname }}StateNFS state">ESTADO</td>
         </tr>
         <tr>
-            <th class="Menu-Lateral">Filesystem APP</th>
+            <th class="Menu-Lateral" rowspan="{{ VALUE_FS.stdout }}">Filesystem APP</th>
         </tr>
+        {{ Filesystem.stdout }}
     </tbody>
 </table>
 </body>

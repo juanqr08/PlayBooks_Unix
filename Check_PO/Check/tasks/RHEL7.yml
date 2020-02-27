@@ -74,8 +74,6 @@
   shell: "value=0;for i in monitoring medusa pim hpucmdb ; do y=$(grep -i $i /etc/passwd |  awk '{print $1}'); if [[ $y == '' ]]; then value=$(($value+1)); fi; done; echo $(($value+1))"
   register: VALUE_USUARIOS_MONITOREO
 
-- debug: msg='Cantidad Ruetas = {{ CONFIGURACION_RUTAS.stdout }}'
-
 - name: Validacion Configuracion Sudoers
   shell: value=0;for i in %admtmx medusa pim ; do y=$(grep $i /etc/sudoers | grep -v '#'); if [[ $y == '' ]]; then value=$(($value+1));echo '<tr><td colspan="3">Falta Configuracion:' $i'</td></tr>'; fi; done;if [[ $value -le 1 ]]; then  echo '<td> </td>'; fi
   register: SUDOERS
@@ -123,3 +121,11 @@
   debug: msg={{ ansible_facts.services['nfs.service'] }}
   ignore_errors: yes
   register: NFS
+
+- name: Analizando Filesystem
+  shell: x=$(df -hP | grep -vw /mnt | grep -vw /tmp | grep -vw /home | grep -vw / | grep -vw /boot | sed 1d | wc -l); echo $(($x+1))
+  register: VALUE_FS
+
+- name: Analizando Filesystem
+  shell: x=$(df -hP | grep -vw /mnt | grep -vw /tmp | grep -vw /home | grep -vw / | grep -vw /boot | sed 1d | wc -l); for (( i = 1; i <= $x; i++ )); do y=$(df -hP | grep -vw /mnt | grep -vw /tmp | grep -vw /home | grep -vw / | grep -vw /boot | sed 1d |sed -n $i\p); echo '<tr><td colspan="3">'$y'</td></tr>'; done
+  register: Filesystem
