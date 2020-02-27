@@ -29,6 +29,16 @@
   delegate_to: localhost
 
 - name: "Union Total"
+  shell: "cat /tmp/date.js >> /tmp/FinalHTML.html"
+  run_once: true
+  delegate_to: localhost
+
+- name: "Union Total"
+  shell: "echo '</script></body></html>' >> /tmp/FinalHTML.html"
+  run_once: true
+  delegate_to: localhost
+
+- name: "Union Total"
   shell: "cat /tmp/FinalHTML.html >> /tmp/CheckMachine.html"
   run_once: true
   delegate_to: localhost
@@ -62,7 +72,7 @@
   delegate_to: localhost
   run_once: true
 
-- debug: msg='Por Favor ingresar a la URL:http://localhost:6060/uptimeUnix/Check_{{ Fecha.stdout }} Para poder validar la captura del UPTIME de las Maquinas'
+- debug: msg='Por Favor ingresar a la URL:http://172.22.16.179:443/uptimeUnix/Check_{{ Fecha.stdout }} Para poder validar la captura del UPTIME de las Maquinas'
   run_once: yes
 
 - debug: msg='Creado por:Juan Jose Quintero R.'
