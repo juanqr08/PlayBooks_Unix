@@ -26,4 +26,4 @@
   include: Win_US.yml
   when: Languaje.stdout == "es-US\r\n"
 
-- debug: msg={{ Languaje.stdout }}
+- debug: msg={{ Languaje }}
