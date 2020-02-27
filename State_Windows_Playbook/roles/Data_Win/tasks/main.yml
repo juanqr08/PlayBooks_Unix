@@ -20,10 +20,10 @@
 
 - name: Verificando Lenguaje ...
   include: Win_ES.yml
-  when: Languaje.stdout == "es-ES\r\n"
+  when: Languaje.stdout_lines == "es-ES"
 
 - name: Verificando Lenguaje ...
   include: Win_US.yml
-  when: Languaje.stdout == "es-US\r\n"
+  when: Languaje.stdout_lines == "es-US"
 
-- debug: msg={{ Languaje }}
+- debug: msg={{ Languaje.stdout_lines }}
