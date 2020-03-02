@@ -1,7 +1,7 @@
 ---
 - name: Create users with home directory
   user: 
-    name: {{ username }}
+    name: "{{ username }}"
     shell: /bin/bash 
     createhome: yes 
     comment: 'Created by Ansible'
