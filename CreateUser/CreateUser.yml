@@ -1,6 +1,5 @@
 ---
 - name: "Inicio Check Paso Operacion"
   hosts: localhost
-  become: yes
   roles: 
     - User
