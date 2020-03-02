@@ -1,5 +1,5 @@
 ---
-- name: Creacion de Usuarios - Windows
+- name: Eliminacion de Usuarios - Windows
   hosts: all
   roles: 
     - User
