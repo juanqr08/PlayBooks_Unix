@@ -1,5 +1,5 @@
 ---
-- name: Create users with home directory
+- name: Cambio de Contrasena - Windows
   win_user: 
     name: "{{ item.username }}"
     password: "{{ item.password }}"
