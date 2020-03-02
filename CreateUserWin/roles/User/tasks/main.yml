@@ -3,8 +3,8 @@
   win_user: 
     name: "{{ item.username }}"
     fullname: "{{ item.username }}"
-    description: "Usuario de Pruebas - Ansible"
-    password: 'Colombia123'
+    description: "Usuario Creado Bajo el Caso - {{ item.case }}"
+    password: "{{ item.password }}"
     state: present
   with_items: 
     - "{{ users }}"
