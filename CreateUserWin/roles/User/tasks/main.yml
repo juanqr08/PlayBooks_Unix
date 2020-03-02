@@ -3,7 +3,7 @@
   win_user: 
     name: "{{ item.username }}"
     fullname: "{{ item.username }}"
-    description: "Usuario Creado Bajo el Caso - {{ item.case }}"
+    description: "Usuario Creado Bajo el Caso"
     password: "{{ item.password }}"
     state: present
   with_items: 
