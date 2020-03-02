@@ -5,4 +5,6 @@
     shell: /bin/bash 
     createhome: yes 
     comment: 'Created by Ansible'
-  with_items: '{{users}}'
+    password: 'Colombia123'
+    state: present
+  with_items: '{{ users }}'
