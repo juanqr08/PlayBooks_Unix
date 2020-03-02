@@ -2,6 +2,5 @@
 - name: "Inicio Check Paso Operacion"
   hosts: localhost
   become: yes
-  become_method: sudo
   roles: 
     - User
