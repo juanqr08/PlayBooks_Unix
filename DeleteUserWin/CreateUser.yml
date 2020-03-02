@@ -1,5 +1,0 @@
----
-- name: "Inicio Check Paso Operacion"
-  hosts: all
-  roles: 
-    - User
