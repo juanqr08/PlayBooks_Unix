@@ -5,4 +5,4 @@
     shell: /bin/bash 
     createhome: yes 
     comment: 'Created by Ansible'
-  with_items: '{{ users }}'
+  with_items: '{{users}}'
