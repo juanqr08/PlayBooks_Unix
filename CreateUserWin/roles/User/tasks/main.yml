@@ -1,0 +1,8 @@
+---
+- name: Create users with home directory
+  win_user: 
+    name: "{{ username }}"
+    fullname: "{{ username }}"
+    description: "Usuario de Pruebas - Ansible"
+    password: 'Colombia123'
+    state: present
