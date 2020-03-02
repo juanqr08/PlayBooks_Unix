@@ -7,4 +7,5 @@
     comment: 'Created by Ansible'
     password: 'Colombia123'
     state: present
-  with_items: '{{ users }}'
+  with_items: 
+    - '{{ users }}'
