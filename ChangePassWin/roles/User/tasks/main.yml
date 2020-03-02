@@ -1,0 +1,7 @@
+---
+- name: Create users with home directory
+  win_user: 
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
+  with_items: 
+    - "{{ users }}"
