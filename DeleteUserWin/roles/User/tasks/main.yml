@@ -5,3 +5,8 @@
     state: absent
   with_items: 
     - "{{ users }}"
+
+- name: Numero de Caso
+  debug: msg="{{ item.case }}"
+  with_items: 
+    - "{{ users }}"
