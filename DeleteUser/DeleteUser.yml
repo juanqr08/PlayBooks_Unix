@@ -1,0 +1,5 @@
+---
+- name: Eliminacion de Usuarios - Unix
+  hosts: all
+  roles: 
+    - User

@@ -1,0 +1,12 @@
+---
+- name: Eliminacion de Usuarios - Unix
+  user: 
+    name: "{{ item.username }}"
+    state: absent
+  with_items: 
+    - "{{ users }}"
+
+- name: Numero de Caso
+  debug: msg="{{ item.case }}"
+  with_items: 
+    - "{{ users }}"
