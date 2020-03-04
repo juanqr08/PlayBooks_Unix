@@ -1,10 +1,14 @@
 ---
 - name: Create users with home directory
   user: 
-    name: "{{ username }}"
+    name: "{{ item.username }}"
     shell: /bin/bash 
     createhome: yes 
+    password: "{{ item.password }}"
     comment: 'Created by Ansible'
-    password: 'Colombia123'
     state: present
-
+    groups:
+      - "{{ item.group }}"
+    update_password: on_create
+  with_items: 
+    - "{{ users }}"
