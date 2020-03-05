@@ -1,0 +1,5 @@
+---
+- name: Captura de Informacion
+  hosts: all
+  roles:
+    - infosys
