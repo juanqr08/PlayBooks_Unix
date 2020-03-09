@@ -1,0 +1,1 @@
+Este PlayBooy  solo captura  como está configurado  el  SYSLOG y/o ROTATE en los  servidores.

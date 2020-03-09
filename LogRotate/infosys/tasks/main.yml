@@ -1,0 +1,40 @@
+---
+- name: Validando Archivo "syslog"
+  stat:
+      path: /etc/logrotate.d/syslog
+  register: syslog_stat
+
+- name: Validando Archivo "syslog"
+  stat:
+      path: /etc/logrotate.d/httpd
+  register: httpd_stat
+
+- name: Capturando Informacion
+  shell: cat /etc/logrotate.d/syslog
+  when: syslog_stat.stat.exists == True
+  register: DataSyslog
+
+- name: Capturando Informacion
+  shell: cat /etc/logrotate.d/httpd
+  when: httpd_stat.stat.exists == True
+  register: DataHttpd
+
+- debug: msg='{{ DataHttpd }}'
+
+- name: Creando Archivos de Datos en /tmp
+  template:
+      dest: /tmp/{{ ansible_hostname }}_Sys.txt
+      src: syslog.j2
+  delegate_to: localhost
+      
+- name: Uniendo Archivos de Datos en /tmp/DataSyslog_{{ ansible_date_time.iso8601_basic_short }}_Syslog.txt
+  shell: cat /tmp/*_Sys.txt >> /tmp/DataSyslog_{{ ansible_date_time.iso8601_basic_short }}_Syslog.txt
+  delegate_to: localhost
+  run_once: yes
+
+- name: Limpiando ...
+  file:
+    path: /tmp/{{ ansible_hostname }}_Sys.txt
+    state: absent
+  delegate_to: localhost
+  

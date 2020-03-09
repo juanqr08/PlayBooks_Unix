@@ -1,0 +1,7 @@
+-------------------------------------------------
+Hostname: {{ ansible_hostname }}
+File: /etc/logrotate.d/syslog
+Data: {{ DataSyslog.stdout_lines }}
+
+File: /etc/logrotate.d/httpd
+Data: {{ DataSyslog.stdout_lines }}
