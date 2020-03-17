@@ -30,7 +30,6 @@
 }
 .{{ ansible_hostname }}Table-DataSSH.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: 25%;
     top: 33px;
 }
 
@@ -52,14 +51,13 @@
     padding: 30px 30px 30px 30px;
     border-radius: 10px;
     position: absolute;
-    top: 40%;
+    top: 55%;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     transition: clip-path .3s ease-out;
     margin: auto;
 }
 .{{ ansible_hostname }}Table-DataCPU.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: 25%;
 }
 /*Estilos Tabla MEMORIA*/
 .contenerdor-btn .{{ ansible_hostname }}Open-TableMEM{
@@ -79,14 +77,13 @@
     padding: 30px 30px 30px 30px;
     border-radius: 10px;
     position: absolute;
-    top: 40%;
+    top: 55%;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     transition: clip-path .3s ease-out;
     margin: auto;
 }
 .{{ ansible_hostname }}Table-DataMEM.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: 25%;
 }
 /*Estilos Tabla SWAP*/
 .contenerdor-btn .{{ ansible_hostname }}Open-TableSWAP{
@@ -106,14 +103,13 @@
     padding: 30px 30px 30px 30px;
     border-radius: 10px;
     position: absolute;
-    top: 40%;
+    top: 55%;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     transition: clip-path .3s ease-out;
     margin: auto;
 }
 .{{ ansible_hostname }}Table-DataSWAP.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: 25%;
 }
 /*Estilos Tabla FileSystem*/
 .contenerdor-btn .{{ ansible_hostname }}Open-TableFS{
@@ -135,11 +131,10 @@
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     transition: clip-path .3s ease-out;
     position: absolute;
-    top: 40%;
+    top: 55%;
 }
 .{{ ansible_hostname }}Table-DataFS.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: 25%;
 }
 /*Estilos Tabla ALL*/
 .contenerdor-btn .{{ ansible_hostname }}Open-TableALL{
@@ -162,11 +157,10 @@
     transition: clip-path .3s ease-out;
     margin: auto;
     position: absolute;
-    top: 40%;
+    top: 55%;
 }
 .{{ ansible_hostname }}Table-DataALL.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: 25%;
 }
 .{{ ansible_hostname }}tabla{
     border-collapse: collapse;
