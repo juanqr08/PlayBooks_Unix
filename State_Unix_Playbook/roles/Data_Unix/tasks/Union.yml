@@ -74,3 +74,17 @@
     - "Final.html"
   delegate_to: localhost
   run_once: true
+  
+  - name: Limpiando Archivos...
+  file:
+      path: /opt/Tomcat9/webapps/CheckPaso/CheckPaso/Check_{{ Fecha.stdout }}/{{ item }}
+      state: absent
+  with_items:
+    - "{{ ansible_hostname }}Style.css"
+    - "intermediate.html"
+    - "{{ ansible_hostname }}Botones.html"
+    - "{{ ansible_hostname }}Tabla.html"
+    - "{{ ansible_hostname }}ScriptBotones.js"
+    - "{{ ansible_hostname }}script.js.j2.js"
+    - "Final.html"
+  delegate_to: localhost
