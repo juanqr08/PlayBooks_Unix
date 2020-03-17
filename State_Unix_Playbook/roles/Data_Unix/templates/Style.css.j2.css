@@ -189,8 +189,10 @@
 }
 .Table-{{ ansible_hostname }}.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    display: block;
 }
 .Table-{{ ansible_hostname }}{
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     transition: clip-path .3s ease-out;
+    display: none;
 }
