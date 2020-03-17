@@ -1,0 +1,215 @@
+</div>
+<div class="{{ ansible_hostname }}contenedor-tabla tabla">
+    <table class="Table-{{ ansible_hostname }} {{ ansible_hostname }}tabla" id="Table-{{ ansible_hostname }}">
+        <tbody>
+            <tr>
+                <th colspan="6" class="{{ ansible_hostname }}HeadTable">
+                    <p>Servidor: {{ ansible_hostname }}</p>
+                </th>
+            </tr>
+            <tr>
+                <td>Tipo:</td>
+                <td>{{ ansible_distribution }}</td>
+                <td>Ultimo Reinicio:</td>
+                <td>{{ uptime.stdout }}</td>
+                <td>Estado</td>
+                <td class="{{ ansible_hostname }}State">Status</td>
+            </tr>
+            <tr>
+                <td> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_hostname }}Open-TableSSH" id="{{ ansible_hostname }}Open-TableSSH">SSH</button>
+                    </div>
+                </td>
+                <td> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_hostname }}Open-TableCPU" id="{{ ansible_hostname }}Open-TableCPU">CPU</button>
+                    </div>
+                </td>
+                <td class="{{ ansible_hostname }}StateMEM"> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_hostname }}Open-TableMEM" id="{{ ansible_hostname }}Open-TableMEM">Memoria</button>
+                    </div>
+                </td>
+                <td class="{{ ansible_hostname }}StateSWAP">
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_hostname }}Open-TableSWAP" id="{{ ansible_hostname }}Open-TableSWAP">Memoria SWAP</button>
+                    </div>
+                </td>
+                <td class="{{ ansible_hostname }}StateDS"> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_hostname }}Open-TableFS" id="{{ ansible_hostname }}Open-TableFS">FileSystem</button>
+                    </div>
+                </td>
+                <td> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_hostname }}Open-TableALL" id="{{ ansible_hostname }}Open-TableALL">Mostrar Todo</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <table class="{{ ansible_hostname }}Table-DataSSH" id="{{ ansible_hostname }}Table-DataSSH">
+                    <tbody>
+                        <tr>
+                            <th colspan="6" >Estado Servicio SSH</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Conectividad:</td>
+                            <td>{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}OK{% endif %}{% endif %}</td>
+                            <td colspan="2">Estado SSH:</td>
+                            <td class="{{ ansible_hostname }}State_SSH {{ ansible_hostname }}State_SSH1">{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}running{% endif %}{% endif %}</td>
+                        </tr>
+                    </tbody>
+                    <table class="{{ ansible_hostname }}Table-DataCPU" id="{{ ansible_hostname }}Table-DataCPU">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" >Consumo CPU</th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td class="{{ ansible_hostname }}Porcent_CPU">{{ cpu_porcent_free.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_hostname }}State_CPU"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>USER</td>
+                                <td>%CPU</td>
+                                <td>COMMAND</td>
+                            </tr>
+                            {{ Get_CPU.stdout }}
+                        </tbody>
+                    </table>
+                    <table class="{{ ansible_hostname }}Table-DataMEM" id="{{ ansible_hostname }}Table-DataMEM">
+                        <tbody>
+                            <tr>
+                                <th colspan="6">Consumo Memoria RAM</th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td class="{{ ansible_hostname }}Porcent_MEM">{{ memory_porcent_free.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_hostname }}State_MEM"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>USER</td>
+                                <td>%MEM</td>
+                                <td>COMMAND</td>
+                            </tr>
+                            {{ Get_Mem.stdout }}
+                        </tbody>
+                    </table>
+                    <table class="{{ ansible_hostname }}Table-DataSWAP" id="{{ ansible_hostname }}Table-DataSWAP">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" >Consumo SWAP</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Porcentaje de Uso:</td>
+                                <td class="{{ ansible_hostname }}SWAP">{{ memory_swap_porcent.stdout }}</td>
+                                <td colspan="2">Estado</td>
+                                <td class="{{ ansible_hostname }}State-SWAP"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="{{ ansible_hostname }}Table-DataFS" id="{{ ansible_hostname }}Table-DataFS">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" >FileSystem Saturados</th>
+                            </tr>
+                            <tr>
+                                <td>Cantidad:</td>
+                                <td colspan="3" class="{{ ansible_hostname }}State-Disc">0</td>
+                                <td>Estado:</td>
+                                <td class="{{ ansible_hostname }}State-DiscF"></td>
+                            </tr>
+                            <tr>
+                                <td>Filesystem</td>
+                                <td>Size</td>
+                                <td>Used</td>
+                                <td>Avail</td>
+                                <td>Use%</td>
+                                <td>Mounted on</td>
+                            </tr>
+                        </tbody>
+                        {{ Filesystem.stdout }}
+                    </table>
+            </tr>
+            <tr>
+                    <table class="{{ ansible_hostname }}Table-DataALL" id="{{ ansible_hostname }}Table-DataALL">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" style="font-size: 22px";>Reporte de Estado</th>
+                            </tr>
+                            <tr>
+                                <th colspan="4" >Estado Servicio SSH</th>
+                            </tr>
+                            <tr>
+                                <td>Conectividad:</td>
+                                <td>{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}OK{% endif %}{% endif %}</td>
+                                <td>Estado SSH:</td>
+                                <td class="{{ ansible_hostname }}State_SSH">{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}running{% endif %}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="6" >Consumo CPU</th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td>{{ cpu_porcent_free.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_hostname }}State_CPU"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>USER</td>
+                                <td>%CPU</td>
+                                <td>COMMAND</td>
+                            </tr>
+                            {{ Get_CPU.stdout }}
+                            <tr>
+                                <th colspan="6">Consumo Memoria RAM</th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td>{{ memory_porcent_free.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_hostname }}State_MEM"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>USER</td>
+                                <td>%MEM</td>
+                                <td>COMMAND</td>
+                            </tr>
+                            {{ Get_Mem.stdout }}
+                            <tr>
+                                <th colspan="6" >Consumo SWAP</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Porcentaje de Uso:</td>
+                                <td class="{{ ansible_hostname }}SWAP1">{{ memory_swap_porcent.stdout }}</td>
+                                <td class="{{ ansible_hostname }}State-SWAP" colspan="2">Estado</td>
+                            </tr>
+                            <tr>
+                                <th colspan="6" >FileSystem Saturados</th>
+                            </tr>
+                            <tr>
+                                <td>Cantidad:</td>
+                                <td class="{{ ansible_hostname }}State-Disc">0</td>
+                                <td>Estado:</td>
+                                <td class="{{ ansible_hostname }}State-DiscF">0</td>
+                            </tr>
+                            <tr>
+                                <td>Disco</td>
+                                <td>Tamano</td>
+                                <td>%Uso</td>
+                                <td>%Disponible</td>
+                            </tr>
+                            {{ Filesystem.stdout }}
+                        </tbody>
+                    </table>
+            </tr>
+            </tbody>
+        </table>
+</div>

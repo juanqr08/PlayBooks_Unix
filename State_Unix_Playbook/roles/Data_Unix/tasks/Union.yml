@@ -1,0 +1,76 @@
+---
+- name: 
+  shell: date | awk '{print $3 $4 $NF}'
+  register: Fecha
+  run_once: yes
+- name: Creacion Carpeta 
+  file:
+      path: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}
+      state: directory
+      mode: '0777'
+  delegate_to: localhost
+  run_once: true
+
+- name: Creacion Vista Inicial
+  template:
+      src: index.html.j2.html
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/index.html
+  run_once: true
+  delegate_to: localhost
+
+- name: Creacion Vista Inicial (Styles)
+  template:
+      src: Style.css.j2.css
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}Style.css
+  delegate_to: localhost
+
+- name: Creacion Vista Inicial (HTML)
+  template:
+      src: intermediate.html.j2.html
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/intermediate.html
+  run_once: true
+  delegate_to: localhost
+
+- name: Creacion de Botones
+  template:
+      src: botones.html.j2.html
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}Botones.html
+  delegate_to: localhost      
+
+- name: Creacion de Tablas
+  template:
+      src: table.html.j2.html
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}Tabla.html
+  delegate_to: localhost    
+  
+- name: Creacion de Primer Script
+  template:
+      src: ScriptBotones.js.j2.js
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}ScriptBotones.js
+  delegate_to: localhost  
+  
+- name: Creacion de Primer Script
+  template:
+      src: script.js.j2.js
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ ansible_hostname }}script.js.j2.js
+  delegate_to: localhost  
+
+- name: Creacion del Cierre
+  template:
+      src: Final.html.j2.html
+      dest: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/Final.html
+  delegate_to: localhost   
+  run_once: true
+
+- name: Creacion Vista HTML
+  shell: cat /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ item }} >> /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/index.html
+  with_items:
+    - "*Style.css"
+    - "intermediate.html"
+    - "*Botones.html"
+    - "*Tabla.html"
+    - "*ScriptBotones.js"
+    - "*script.js.j2.js"
+    - "Final.html"
+  delegate_to: localhost
+  run_once: true

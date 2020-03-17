@@ -1,0 +1,194 @@
+.{{ ansible_hostname }}contenedor-tabla{
+    display: flex;
+    flex-direction: column;
+}
+/*Estilos Tabla SSH*/
+.contenerdor-btn .{{ ansible_hostname }}Open-TableSSH{
+    background-color: white;
+    border: white;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+.contenerdor-btn .{{ ansible_hostname }}Open-TableSSH:hover{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}Table-DataSSH{
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    max-width: 686px;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+    margin: auto;
+}
+.{{ ansible_hostname }}Table-DataSSH.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: 25%;
+    top: 33px;
+}
+
+/*Estilos Tabla CPU*/
+.contenerdor-btn .{{ ansible_hostname }}Open-TableCPU{
+    background-color: white;
+    border: white;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+.contenerdor-btn .{{ ansible_hostname }}Open-TableCPU:hover{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}Table-DataCPU{
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    max-width: 686px;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: 40%;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+    margin: auto;
+}
+.{{ ansible_hostname }}Table-DataCPU.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: 25%;
+}
+/*Estilos Tabla MEMORIA*/
+.contenerdor-btn .{{ ansible_hostname }}Open-TableMEM{
+    background-color: white;
+    border: white;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+.contenerdor-btn .{{ ansible_hostname }}Open-TableMEM:hover{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}Table-DataMEM{
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    max-width: 686px;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: 40%;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+    margin: auto;
+}
+.{{ ansible_hostname }}Table-DataMEM.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: 25%;
+}
+/*Estilos Tabla SWAP*/
+.contenerdor-btn .{{ ansible_hostname }}Open-TableSWAP{
+    background-color: white;
+    border: white;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+.contenerdor-btn .{{ ansible_hostname }}Open-TableSWAP:hover{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}Table-DataSWAP{
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    max-width: 686px;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: 40%;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+    margin: auto;
+}
+.{{ ansible_hostname }}Table-DataSWAP.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: 25%;
+}
+/*Estilos Tabla FileSystem*/
+.contenerdor-btn .{{ ansible_hostname }}Open-TableFS{
+    background-color: white;
+    border: white;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+.contenerdor-btn .{{ ansible_hostname }}Open-TableFS:hover{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}Table-DataFS{
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    max-width: 686px;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+    position: absolute;
+    top: 40%;
+}
+.{{ ansible_hostname }}Table-DataFS.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: 25%;
+}
+/*Estilos Tabla ALL*/
+.contenerdor-btn .{{ ansible_hostname }}Open-TableALL{
+    background-color: white;
+    border: white;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+.contenerdor-btn .{{ ansible_hostname }}Open-TableALL:hover{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}Table-DataALL{
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    max-width: 686px;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+    margin: auto;
+    position: absolute;
+    top: 40%;
+}
+.{{ ansible_hostname }}Table-DataALL.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: 25%;
+}
+.{{ ansible_hostname }}tabla{
+    border-collapse: collapse;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+.{{ ansible_hostname }}tabla th, .{{ ansible_hostname }}tabla td{
+    border: 1px solid #ddd;
+    padding: 10px 17px;
+}
+.{{ ansible_hostname }}HeadTable{
+    background-color: rgba(250, 17, 17, 0.781);
+}
+.{{ ansible_hostname }}MEM{
+    width: 100%;
+}
+.{{ ansible_hostname }}DFS{
+    width: 100%;
+}
+.{{ ansible_hostname }}DSWAP{
+    width: 100%;
+}
+.Table-{{ ansible_hostname }}.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.Table-{{ ansible_hostname }}{
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path .3s ease-out;
+}
