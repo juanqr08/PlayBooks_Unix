@@ -1,6 +1,6 @@
 </div>
-<div class="{{ ansible_hostname }}contenedor-tabla tabla">
-    <table class="Table-{{ ansible_hostname }} {{ ansible_hostname }}tabla" id="Table-{{ ansible_hostname }}">
+<div class="{{ ansible_hostname }}contenedor-tabla">
+    <table class="tabla Table-{{ ansible_hostname }} {{ ansible_hostname }}tabla" id="Table-{{ ansible_hostname }}">
         <tbody>
             <tr>
                 <th colspan="6" class="{{ ansible_hostname }}HeadTable">
@@ -48,7 +48,7 @@
                 </td>
             </tr>
             <tr>
-                <table class="{{ ansible_hostname }}Table-DataSSH" id="{{ ansible_hostname }}Table-DataSSH">
+                <table class="{{ ansible_hostname }}Table-DataSSH htable" id="{{ ansible_hostname }}Table-DataSSH">
                     <tbody>
                         <tr>
                             <th colspan="6" >Estado Servicio SSH</th>
@@ -60,7 +60,7 @@
                             <td class="{{ ansible_hostname }}State_SSH {{ ansible_hostname }}State_SSH1">{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}running{% endif %}{% endif %}</td>
                         </tr>
                     </tbody>
-                    <table class="{{ ansible_hostname }}Table-DataCPU" id="{{ ansible_hostname }}Table-DataCPU">
+                    <table class="{{ ansible_hostname }}Table-DataCPU htable" id="{{ ansible_hostname }}Table-DataCPU">
                         <tbody>
                             <tr>
                                 <th colspan="6" >Consumo CPU</th>
@@ -80,7 +80,7 @@
                             {{ Get_CPU.stdout }}
                         </tbody>
                     </table>
-                    <table class="{{ ansible_hostname }}Table-DataMEM" id="{{ ansible_hostname }}Table-DataMEM">
+                    <table class="{{ ansible_hostname }}Table-DataMEM htable" id="{{ ansible_hostname }}Table-DataMEM">
                         <tbody>
                             <tr>
                                 <th colspan="6">Consumo Memoria RAM</th>
@@ -100,7 +100,7 @@
                             {{ Get_Mem.stdout }}
                         </tbody>
                     </table>
-                    <table class="{{ ansible_hostname }}Table-DataSWAP" id="{{ ansible_hostname }}Table-DataSWAP">
+                    <table class="{{ ansible_hostname }}Table-DataSWAP htable" id="{{ ansible_hostname }}Table-DataSWAP">
                         <tbody>
                             <tr>
                                 <th colspan="6" >Consumo SWAP</th>
@@ -113,7 +113,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="{{ ansible_hostname }}Table-DataFS" id="{{ ansible_hostname }}Table-DataFS">
+                    <table class="{{ ansible_hostname }}Table-DataFS htable" id="{{ ansible_hostname }}Table-DataFS">
                         <tbody>
                             <tr>
                                 <th colspan="6" >FileSystem Saturados</th>
@@ -137,7 +137,7 @@
                     </table>
             </tr>
             <tr>
-                    <table class="{{ ansible_hostname }}Table-DataALL" id="{{ ansible_hostname }}Table-DataALL">
+                    <table class="{{ ansible_hostname }}Table-DataALL htable" id="{{ ansible_hostname }}Table-DataALL">
                         <tbody>
                             <tr>
                                 <th colspan="6" style="font-size: 22px";>Reporte de Estado</th>
