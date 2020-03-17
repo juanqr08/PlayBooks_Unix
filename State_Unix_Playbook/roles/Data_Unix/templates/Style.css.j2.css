@@ -4,7 +4,7 @@
     position: absolute;
     margin-left: 25%;
 }
-.{{ ansible_hostname }}contenedor-tabla.active{
+.{{ ansible_hostname }}contenedor-tabla.active2{
     display: flex;
 }
 /*Estilos Tabla SSH*/
