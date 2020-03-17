@@ -1,6 +1,8 @@
 .{{ ansible_hostname }}contenedor-tabla{
     display: flex;
     flex-direction: column;
+    position: absolute;
+    margin-left: 25%;
 }
 /*Estilos Tabla SSH*/
 .contenerdor-btn .{{ ansible_hostname }}Open-TableSSH{
