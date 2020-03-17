@@ -38,7 +38,7 @@
 
 - include: Union.yml
 
-- debug: msg='Por Favor ingresar a la URL:http://localhost:6060/checkUnix/{{ ansible_hostname }} Para poder validar la captura de los 7 Pasos de las Maquinas'
+- debug: msg='Por Favor ingresar a la URL:http://172.22.16.179:443/checkUnix/Check_{{ Fecha.stdout }}} Para poder validar la captura de los 7 Pasos de las Maquinas'
 
 - debug: msg='Creado por:Juan Jose Quintero R.'
   run_once: yes
