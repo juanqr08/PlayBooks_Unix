@@ -1,0 +1,201 @@
+<div class="{{ ansible_env.COMPUTERNAME }}contenedor-tabla" id="{{ ansible_env.COMPUTERNAME }}contenedor-tabla">
+    <table class="tabla {{ ansible_env.COMPUTERNAME }}tabla Table-{{ ansible_env.COMPUTERNAME }}" id="Table-{{ ansible_env.COMPUTERNAME }}" >
+        <tbody>
+            <tr>
+                <th colspan="6" class="{{ ansible_env.COMPUTERNAME }}HeadTable">
+                    <p>Servidor: {{ ansible_env.COMPUTERNAME }}</p>
+                </th>
+            </tr>
+            <tr>
+                <td>Tipo:</td>
+                <td>{{ ansible_os_name }}</td>
+                <td>Ultimo Reinicio:</td>
+                <td>{{ ansible_lastboot }}</td>
+                <td>Estado</td>
+                <td class="{{ ansible_env.COMPUTERNAME }}State">Status</td>
+            </tr>
+            <tr>
+                <td> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_env.COMPUTERNAME }}Open-TableSSH" id="{{ ansible_env.COMPUTERNAME }}Open-TableSSH">RDP</button>
+                    </div>
+                </td>
+                <td class="{{ ansible_env.COMPUTERNAME }}StateCPU"> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_env.COMPUTERNAME }}Open-TableCPU" id="{{ ansible_env.COMPUTERNAME }}Open-TableCPU">CPU</button>
+                    </div>
+                </td>
+                <td class="{{ ansible_env.COMPUTERNAME }}StateMEM"> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_env.COMPUTERNAME }}Open-TableMEM" id="{{ ansible_env.COMPUTERNAME }}Open-TableMEM">Memoria</button>
+                    </div>
+                </td>
+                <td class="{{ ansible_env.COMPUTERNAME }}StateDS"> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_env.COMPUTERNAME }}Open-TableFS" id="{{ ansible_env.COMPUTERNAME }}Open-TableFS">Discos Duros</button>
+                    </div>
+                </td>
+                <td colspan="2"> 
+                    <div class="contenerdor-btn">
+                        <button class="{{ ansible_env.COMPUTERNAME }}Open-TableALL" id="{{ ansible_env.COMPUTERNAME }}Open-TableALL">Mostrar Todo</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <table class="{{ ansible_env.COMPUTERNAME }}Table-DataSSH htable" id="{{ ansible_env.COMPUTERNAME }}Table-DataSSH">
+                    <tbody>
+                        <tr>
+                            <th colspan="4" >Estado Servicio RDP</th>
+                        </tr>
+                        <tr>
+                            <td>Conectividad:</td>
+                            <td>False</td>
+                            <td>Estado RDP:</td>
+                            <td class="{{ ansible_env.COMPUTERNAME }}State_RDP {{ ansible_env.COMPUTERNAME }}State_RDP1">{{ RDP.stdout }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <table class="{{ ansible_env.COMPUTERNAME }}Table-DataCPU htable" id="{{ ansible_env.COMPUTERNAME }}Table-DataCPU">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" >Consumo CPU</th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}Porcent_CPU">{{ Percentage_CPU.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State_CPU"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>Proceso</td>
+                                <td>Usuario</td>
+                                <td>Consumo CPU</td>
+                            </tr>
+                            {{ Get_CPU.stdout }}
+                    </table>
+                    <table class="{{ ansible_env.COMPUTERNAME }}Table-DataMEM htable" id="{{ ansible_env.COMPUTERNAME }}Table-DataMEM">
+                        <tbody>
+                            <tr>
+                                <th colspan="6">Consumo Memoria RAM</th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}Porcent_MEM">{{ Percentage_MEM.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State_MEM"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>Proceso</td>
+                                <td>Usuario</td>
+                                <td>Consumo MEM</td>
+                            </tr>
+                            {{ Get_MEM.stdout }}
+                        </tbody>
+                    </table>
+                    <table class="{{ ansible_env.COMPUTERNAME }}Table-DataFS htable" id="{{ ansible_env.COMPUTERNAME }}Table-DataFS">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" >Discos Duros</th>
+                            </tr>
+                            <tr>
+                                <td>Cantidad:</td>
+                                <td class="State-Disc">0</td>
+                                <td>Estado:</td>
+                                <td class="State-DiscF">0</td>
+                            </tr>
+                            <tr>
+                                <td>Disco</td>
+                                <td>Tamano</td>
+                                <td>%Uso</td>
+                                <td>%Disponible</td>
+                            </tr>
+                            {{ Get_Disc.stdout }}
+                        </tbody>
+                    </table>
+            </tr>
+            <tr>
+                    <table class="{{ ansible_env.COMPUTERNAME }}Table-DataALL htable" id="{{ ansible_env.COMPUTERNAME }}Table-DataALL">
+                        <tbody>
+                            <tr>
+                                <th colspan="6" style="font-size: 22px";>Reporte de Estado</th>
+                            </tr>
+                            <tr>
+                                <th colspan="4" >Estado Servicio RDP</th>
+                            </tr>
+                            <tr>
+                                <td>Conectividad:</td>
+                                <td>False</td>
+                                <td>Estado RDP:</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State_RDP">{{ RDP.stdout }}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="6" >Consumo CPU</th>
+                            </tr>
+                            <tr>
+                                <th colspan="6" style="background-color: white;border-color: white;border-top-style: dashed;"></th>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td>{{ Percentage_CPU.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State_CPU"></td>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>Proceso</td>
+                                <td>Usuario</td>
+                                <td>Consumo CPU</td>
+                            </tr>
+                            {{ Get_CPU.stdout }}
+                            <tr>
+                                <th colspan="6" style="background-color:white;border-color: white;border-top-style: dashed;"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="6">Consumo Memoria RAM</th>
+                            </tr>
+                            <tr>
+                                <th colspan="6" style="background-color:white;border-color: white;border-top-style: dashed;"></th>
+                            </tr>
+                            <tr>
+                                <td>PID</td>
+                                <td>Proceso</td>
+                                <td>Usuario</td>
+                                <td>Consumo MEM</td>
+                            </tr>
+                            <tr>
+                                <td>Porcentaje de Uso:</td>
+                                <td>{{ Percentage_MEM.stdout }}</td>
+                                <td>Estado</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State_MEM"></td>
+                            </tr>
+                            {{ Get_MEM.stdout }}
+                            <tr>
+                                <th colspan="6" style="background-color:white;border-color: white;border-top-style: dashed;"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="6" >Discos Duros</th>
+                            </tr>
+                            <tr>
+                                <th colspan="6" style="background-color:white;border-color: white;border-top-style: dashed;"></th>
+                            </tr>
+                            <tr>
+                                <td>Cantidad:</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State-Disc">0</td>
+                                <td>Estado:</td>
+                                <td class="{{ ansible_env.COMPUTERNAME }}State-DiscF">0</td>
+                            </tr>
+                            <tr>
+                                <td>Disco</td>
+                                <td>Tamano</td>
+                                <td>%Uso</td>
+                                <td>%Disponible</td>
+                            </tr>
+                            {{ Get_DiscAll.stdout }}
+                        </tbody>
+                    </table>
+            </tr>
+            </tbody>
+        </table>
+</div>

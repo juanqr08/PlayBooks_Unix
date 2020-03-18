@@ -13,9 +13,15 @@
   delegate_to: localhost
   run_once: true
 
+- name: 
+  shell: date | awk '{print $3 $4 $NF}'
+  register: Fecha
+  delegate_to: localhost
+  run_once: yes
+
 - name: Creacion Carpeta 
   file:
-      path: /opt/Tomcat9/webapps/checkWin/{{ ansible_hostname }}
+      path: /opt/Tomcat9/webapps/checkWin/Check_{{ Fecha.stdout }}
       state: directory
       mode: '777'
   delegate_to: localhost
@@ -27,3 +33,5 @@
 - name: Verificando Lenguaje ...
   include: Win_US.yml
   when: Languaje.stdout == "en-US\r\n"
+
+- include: Union.yml
