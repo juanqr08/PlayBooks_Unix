@@ -10,7 +10,8 @@
                 Cont{{ ansible_env.COMPUTERNAME }}.classList.toggle('active2');
                 $('.htable').removeClass('active');
             }else{
-                $(this).removeClass('active')
+                $(this).removeClass('active');
+                $(this).removeClass('active2');
             }
         });
     });
