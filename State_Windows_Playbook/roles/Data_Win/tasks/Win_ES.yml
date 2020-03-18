@@ -40,7 +40,3 @@
     mode: '777'
   delegate_to: localhost
 
-- debug: msg='Por Favor ingresar a la URL:http://172.22.16.179:443/checkWin/Check_{{ Fecha.stdout }} Para poder validar la captura de los 7 Pasos de las Maquinas'
-
-- debug: msg='Creado por:Juan Jose Quintero R.'
-  run_once: yes
