@@ -77,7 +77,7 @@
   
 - name: Limpiando Archivos...
   file:
-      path: /opt/Tomcat9/webapps/CheckPaso/CheckPaso/Check_{{ Fecha.stdout }}/{{ item }}
+      path: /opt/Tomcat9/webapps/checkUnix/Check_{{ Fecha.stdout }}/{{ item }}
       state: absent
   with_items:
     - "{{ ansible_hostname }}Style.css"
