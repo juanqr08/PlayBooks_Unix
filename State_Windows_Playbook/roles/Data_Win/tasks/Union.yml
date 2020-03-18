@@ -1,6 +1,6 @@
 - name: Creacion Vista Inicial
   template:
-      src: index.html.j2.html
+      src: index.html.j2
       dest: /opt/Tomcat9/webapps/checkWin/Check_{{ Fecha.stdout }}/index.html
   run_once: true
   delegate_to: localhost
