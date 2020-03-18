@@ -75,7 +75,7 @@
   delegate_to: localhost
   run_once: true
   
-  - name: Limpiando Archivos...
+- name: Limpiando Archivos...
   file:
       path: /opt/Tomcat9/webapps/CheckPaso/CheckPaso/Check_{{ Fecha.stdout }}/{{ item }}
       state: absent
