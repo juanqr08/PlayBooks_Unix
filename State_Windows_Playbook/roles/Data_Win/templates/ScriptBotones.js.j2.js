@@ -13,12 +13,5 @@
                 $(this).removeClass('active');
             }
         });
-        $('.divtabla').each(function() {
-            if ( $(this).hasClass("{{ ansible_env.COMPUTERNAME }}contenedor-tabla") ) {
-                Cont{{ ansible_env.COMPUTERNAME }}.classList.toggle('active2');
-            }else{
-                $(this).removeClass('active2');
-            }
-        });
     });
 </script>
