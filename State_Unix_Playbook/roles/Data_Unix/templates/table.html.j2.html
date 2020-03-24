@@ -146,18 +146,18 @@
                                 <th colspan="4" >Estado Servicio SSH</th>
                             </tr>
                             <tr>
-                                <td>Conectividad:</td>
+                                <td colspan="2">Conectividad:</td>
                                 <td>{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}OK{% endif %}{% endif %}</td>
-                                <td>Estado SSH:</td>
+                                <td colspan="2">Estado SSH:</td>
                                 <td class="{{ ansible_hostname }}State_SSH">{% if  SSHD.failed  == true %}FAILED{% else %}{% if SSHD.msg.state != 'running' %}FAILED{% else %}running{% endif %}{% endif %}</td>
                             </tr>
                             <tr>
                                 <th colspan="6" >Consumo CPU</th>
                             </tr>
                             <tr>
-                                <td>Porcentaje de Uso:</td>
+                                <td colspan="2">Porcentaje de Uso:</td>
                                 <td>{{ cpu_porcent_free.stdout }}</td>
-                                <td>Estado</td>
+                                <td colspan="2">Estado</td>
                                 <td class="{{ ansible_hostname }}State_CPU"></td>
                             </tr>
                             <tr>
@@ -171,9 +171,9 @@
                                 <th colspan="6">Consumo Memoria RAM</th>
                             </tr>
                             <tr>
-                                <td>Porcentaje de Uso:</td>
+                                <td colspan="2">Porcentaje de Uso:</td>
                                 <td>{{ memory_porcent_free.stdout }}</td>
-                                <td>Estado</td>
+                                <td colspan="2">Estado</td>
                                 <td class="{{ ansible_hostname }}State_MEM"></td>
                             </tr>
                             <tr>
@@ -195,16 +195,18 @@
                                 <th colspan="6" >FileSystem Saturados</th>
                             </tr>
                             <tr>
-                                <td>Cantidad:</td>
+                                <td colspan="2">Cantidad:</td>
                                 <td class="{{ ansible_hostname }}State-Disc">0</td>
-                                <td>Estado:</td>
+                                <td colspan="2">Estado:</td>
                                 <td class="{{ ansible_hostname }}State-DiscF">0</td>
                             </tr>
                             <tr>
-                                <td>Disco</td>
-                                <td>Tamano</td>
-                                <td>%Uso</td>
-                                <td>%Disponible</td>
+                                <td>Filesystem</td>
+                                <td>Size</td>
+                                <td>Used</td>
+                                <td>Avail</td>
+                                <td>Use%</td>
+                                <td>Mounted on</td>
                             </tr>
                             {{ Filesystem.stdout }}
                         </tbody>
