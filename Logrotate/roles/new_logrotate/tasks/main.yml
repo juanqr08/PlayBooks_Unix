@@ -11,6 +11,7 @@
 - name: Aplicando Cambio - Comando
   shell: sudo /usr/sbin/logrotate -f /etc/logrotate.d/syslog
   become: yes
+  become_user: root
 
 - debug:
     msg: Proceso Finalizado ...
