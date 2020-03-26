@@ -1,0 +1,15 @@
+---
+- name: Realizando Cambio - Logrotate (Template)
+  template:
+      dest: /etc/logrotate.d/syslog
+      src: new_syslog.j2
+      owner: root 
+      group: root 
+      mode: '0644'
+      backup: yes 
+
+- name: Aplicando Cambio - Comando
+  shell: logrotate -f /etc/logrotate.d/syslog
+
+- debug:
+    msg: Proceso Finalizado ...

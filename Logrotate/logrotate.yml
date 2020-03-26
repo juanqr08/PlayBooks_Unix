@@ -1,0 +1,6 @@
+---
+- name: Realizando Backup - Logrotate
+  hosts: all
+  become: yes
+  roles:
+    - new_logrotate
