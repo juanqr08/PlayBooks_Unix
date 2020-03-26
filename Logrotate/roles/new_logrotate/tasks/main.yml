@@ -10,7 +10,7 @@
 
 - name: Aplicando Cambio - Comando
   shell: /usr/sbin/logrotate -f /etc/logrotate.d/syslog
-  become: yes
+  ignore_errors: yes
 
 - debug:
     msg: Proceso Finalizado ...
