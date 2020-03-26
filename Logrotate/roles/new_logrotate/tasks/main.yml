@@ -9,8 +9,7 @@
       backup: yes 
 
 - name: Aplicando Cambio - Comando
-  shell: logrotate -f /etc/logrotate.d/syslog
-  become: yes
+  shell: sudo logrotate -f /etc/logrotate.d/syslog
 
 - debug:
     msg: Proceso Finalizado ...
