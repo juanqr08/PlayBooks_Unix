@@ -10,6 +10,7 @@
 
 - name: Aplicando Cambio - Comando
   shell: logrotate -f /etc/logrotate.d/syslog
+  become: yes
 
 - debug:
     msg: Proceso Finalizado ...
