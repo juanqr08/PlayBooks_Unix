@@ -7,9 +7,13 @@
   shell: INT=$(netstat -nr | grep 172.22.16.0 | awk '{print $8}' | tail -n 1); GW=$(netstat -nr | grep 172.22.16.0 | awk '{print $2}' | tail -n 1); netstat -nr | grep {{ item.ip }} > ruta1;if [ ! -s ruta1 ] ; then route add {{ item.ip }}/{{ mask }} gw $GW; echo "{{ item.ip }}/{{ mask }} via $GW" >> /etc/sysconfig/network-scripts/route-$INT; fi
   with_items:
     - "{{ ips }}" 
+
+- name: Verificando IP - Interfaz Gestion
+  shell: x=$(netstat -nr  | grep 172.22.16.0 | awk '{print $NF}');ifconfig | grep -A1 $x | grep inet | awk '{print $2}'
+  register: IPG
     
 - name: Creando archivo conectividad
-  shell: echo '{{ inventory_hostname }}' > /tmp/conectividad.txt    
+  shell: echo '{{ inventory_hostname }} - {{ IPG.stdout }}' > /tmp/conectividad.txt    
   
 - name: Validando conectividad
   shell: ping -c2  {{ item.ip }}; x=$(echo $?); if [ $x != 0 ]; then echo 'No hay conectividad {{ item.ip }}' >> /tmp/conectividad.txt; fi 
