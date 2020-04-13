@@ -1,0 +1,6 @@
+---
+- name: Agrega Rutas
+  hosts: all
+  become: yes
+  roles: 
+    - routes

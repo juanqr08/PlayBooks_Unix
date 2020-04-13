@@ -1,0 +1,25 @@
+---
+- name: Incluyendo variables
+  include_vars:
+    file: /home/ecf1900b/Ansible/PlayBooks/Add_Route/IPS.yml
+    
+- name: agrega ruta
+  shell: INT=$(netstat -nr | grep 172.22.16.0 | awk '{print $8}' | tail -n 1); GW=$(netstat -nr | grep 172.22.16.0 | awk '{print $2}' | tail -n 1); netstat -nr | grep {{ item.ip }} > ruta1;if [ ! -s ruta1 ] ; then route add {{ item.ip }}/{{ mask }} gw $GW; echo "{{ item.ip }}/{{ mask }} via $GW" >> /etc/sysconfig/network-scripts/route-$INT; fi
+  with_items:
+    - "{{ ips }}" 
+    
+- name: Creando archivo conectividad
+  shell: echo '{{ inventory_hostname }}' > /tmp/conectividad.txt    
+  
+- name: Validando conectividad
+  shell: ping -c2  {{ item.ip }}; x=$(echo $?); if [ $x != 0 ]; then echo 'No hay conectividad {{ item.ip }}' >> /tmp/conectividad.txt; fi 
+  with_items:
+    - "{{ ips }}" 
+    
+- name: Leyendo info
+  fetch: src=/tmp/conectividad.txt dest=/home/ecf1900b/Ansible/PlayBooks/Add_Route/logs/{{ ansible_hostname }}conectividad.txt  flat=yes
+  
+- name: Uniendo info
+  shell: cat /home/ecf1900b/Ansible/PlayBooks/Add_Route/logs/*conectividad.txt  >> /home/ecf1900b/Ansible/PlayBooks/Add_Route/logs/conexionFinal.txt
+  delegate_to: localhost
+  run_once: yes
